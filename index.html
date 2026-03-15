@@ -492,7 +492,8 @@
             visibility: hidden;
             transform: translateY(10px);
             transition: var(--transition);
-            max-width: min(90vw, 350px);
+            /* Aumentei de 350px para 500px para suportar a imagem maior */
+            max-width: min(90vw, 500px);
         }
 
         .assistant-wrapper.is-visible {
@@ -527,10 +528,13 @@
         }
 
         .assistant-char-img {
-            width: clamp(60px, 20vw, 80px);
+            /* Aumentado de (60px, 20vw, 80px) para os valores abaixo */
+            width: clamp(120px, 25vw, 200px);
             height: auto;
             transition: transform 0.3s ease;
             cursor: pointer;
+            /* Adicionado margem para não encostar na borda direita do botão */
+            margin-right: 10px;
         }
 
         .assistant-char-img:hover {
