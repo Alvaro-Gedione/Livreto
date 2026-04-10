@@ -1,3 +1,6 @@
+import '@rpgjs/ui-css/reset.css';
+import '@rpgjs/ui-css/index.css';
+import '@rpgjs/ui-css/theme-default.css';
 import { mergeConfig } from "@signe/di";
 import { provideRpg, startGame } from "@rpgjs/client";
 import startServer from "./server";
