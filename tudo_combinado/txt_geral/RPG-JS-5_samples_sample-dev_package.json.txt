@@ -1,0 +1,43 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:mmorpg": "RPG_TYPE=mmorpg vite build",
+    "start:express": "node dist/server/express.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@canvasengine/compiler": "2.0.0-beta.56",
+    "@types/express": "^5.0.6",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "path-browserify": "^1.0.1",
+    "vite": "^8.0.0"
+  },
+  "private": true,
+  "dependencies": {
+    "@canvasengine/presets": "2.0.0-beta.56",
+    "@rpgjs/client": "workspace:*",
+    "@rpgjs/common": "workspace:*",
+    "@rpgjs/ui-css": "workspace:*",
+    "@rpgjs/database": "^4.3.0",
+    "@rpgjs/server": "workspace:*",
+    "@rpgjs/tiledmap": "workspace:*",
+    "@rpgjs/vite": "workspace:*",
+    "@rpgjs/vue": "workspace:*",
+    "@rpgjs/action-battle": "workspace:*",
+    "@signe/di": "^2.8.3",
+    "canvasengine": "2.0.0-beta.56",
+    "express": "^5.2.1",
+    "pixi.js": "^8.17.0",
+    "vue": "^3.5.30",
+    "ws": "^8.19.0"
+  },
+  "type": "module"
+}
+

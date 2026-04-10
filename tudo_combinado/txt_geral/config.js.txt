@@ -1,0 +1,5 @@
+window.ENV = {
+    GEMINI_API_KEY: "AIzaSyA0Ob3l_UWuCNnML8ixJQfOq0fFmgvljqI",
+    APPS_SCRIPT_URL: "COLE_SUA_URL_DO_APPS_SCRIPT_AQUI",
+    HF_TOKEN: "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"
+};
