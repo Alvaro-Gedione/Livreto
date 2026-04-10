@@ -2,9 +2,9 @@
 $projects = @(
     @{ 
         Origem   = "E:\Softwares\Livreto"; 
-        Destino  = "E:\Softwares\Livreto\tudo_combinado\txt_geral"; 
-        Final    = "E:\Softwares\Livreto\tudo_combinado\tudo_combinado_Livreto.txt";
-        Filtro   = "*"
+        Destino  = "C:\Users\Alvaro\Downloads\txt_combinados\txt_geral"; 
+        Final    = "C:\Users\Alvaro\Downloads\txt_combinados\tudo_combinado_Livreto.txt";
+        Filtro   = "*";
         excessao = "tudo_combinado" # Pasta a ser excluída
     }
 )
@@ -16,11 +16,13 @@ foreach ($p in $projects) {
 
     $conteudoAcumulado = New-Object System.Collections.Generic.List[string]
 
-    # Ajuste aqui: Filtrando para NÃO processar a pasta de destino e a excessão
+    # Ajuste aqui: Filtrando para NÃO processar as pastas node_modules e dist, além da pasta de destino e excessão
     Get-ChildItem -Path $p.Origem -Recurse -File -Filter $p.Filtro | Where-Object { 
         $_.FullName -notlike "$($p.Destino)*" -and 
         $_.FullName -ne $p.Final -and 
-        $_.FullName -notmatch [regex]::Escape($p.excessao)
+        $_.FullName -notmatch [regex]::Escape($p.excessao) -and
+        $_.FullName -notmatch "\\node_modules\\" -and
+        $_.FullName -notmatch "\\dist\\"
     } | ForEach-Object {
         
         $caminhoRelativo = $_.FullName.Substring($p.Origem.Length).TrimStart('\')

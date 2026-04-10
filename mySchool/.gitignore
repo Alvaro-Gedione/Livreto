@@ -3,3 +3,4 @@ node_modules/
 tudo_combinado/
 Acod.ps1
 *.txt
+config.js
