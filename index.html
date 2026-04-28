@@ -43,7 +43,6 @@
         /* =========================================
            BACKGROUND PARALLAX (Camadas)
            ========================================= */
-        /* Ajustar o z-index do parallax para não sobrepor o header */
         .parallax-container {
             position: fixed;
             top: 0;
@@ -51,11 +50,9 @@
             width: 100vw;
             height: 100vh;
             z-index: 0;
-            /* ALTERAR de -1 para 0 */
             pointer-events: none;
             overflow: hidden;
         }
-
 
         /* Nuvens animadas - Múltiplas nuvens com posições diferentes */
         .cloud {
@@ -302,19 +299,18 @@
 
         .logo img {
             height: 67.5px;
-            /* ALTERAR de '45px' para '67.5px' */
             width: auto;
-            /* ADICIONAR para manter proporção */
             object-fit: contain;
             transition: height 0.3s ease;
             display: block;
-            /* ADICIONAR */
         }
 
         nav {
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .nav-btn {
@@ -406,6 +402,8 @@
             text-transform: uppercase;
             margin-bottom: 50px;
             text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .cards-container {
@@ -414,6 +412,8 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            flex-wrap: wrap;
+            padding: 0 20px;
         }
 
         .card {
@@ -465,6 +465,278 @@
 
         .card-blue {
             background-color: #4f91e8;
+        }
+
+        /* =========================================
+           RESPONSIVIDADE
+           ========================================= */
+        
+        /* Tablets (até 1024px) */
+        @media (max-width: 1024px) {
+            body {
+                padding-top: 75px;
+            }
+
+            header {
+                padding: 0px 20px;
+            }
+
+            .logo img {
+                height: 55px;
+            }
+
+            nav {
+                gap: 10px;
+            }
+
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .user-badge {
+                padding: 5px 8px 5px 12px;
+                gap: 8px;
+            }
+
+            .user-name {
+                font-size: 14px;
+            }
+
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+            }
+
+            .main-title {
+                font-size: 28px;
+                margin-bottom: 40px;
+            }
+
+            .cards-container {
+                gap: 25px;
+            }
+
+            .card {
+                width: 220px;
+                height: 220px;
+            }
+
+            .card i {
+                font-size: 60px;
+            }
+
+            .card-title {
+                font-size: 22px;
+            }
+        }
+
+        /* Mobile (até 768px) */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 130px;
+            }
+
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .nav-btn i {
+                font-size: 14px;
+            }
+
+            .user-area {
+                margin-left: 0;
+            }
+
+            .user-badge {
+                padding: 5px 10px 5px 12px;
+                gap: 8px;
+            }
+
+            .user-name {
+                font-size: 13px;
+            }
+
+            .user-avatar {
+                width: 30px;
+                height: 30px;
+            }
+
+            .main-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .cards-container {
+                gap: 20px;
+                flex-direction: column;
+            }
+
+            .card {
+                width: 260px;
+                height: 260px;
+            }
+
+            .card i {
+                font-size: 70px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            /* Ajuste das nuvens para mobile */
+            .cloud-1, .cloud-2, .cloud-3, .cloud-4, .cloud-5 {
+                transform: scale(0.7);
+            }
+
+            .layer-school {
+                width: 250px;
+                bottom: 25%;
+            }
+
+            .layer-tree-1 {
+                width: 70px;
+                right: 10%;
+            }
+
+            .layer-tree-2 {
+                width: 55px;
+                right: 3%;
+            }
+        }
+
+        /* Mobile pequeno (até 480px) */
+        @media (max-width: 480px) {
+            body {
+                padding-top: 140px;
+            }
+
+            header {
+                padding: 12px 15px;
+                gap: 12px;
+            }
+
+            .logo img {
+                height: 45px;
+            }
+
+            nav {
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .nav-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+
+            .nav-btn i {
+                font-size: 12px;
+            }
+
+            .user-badge {
+                padding: 4px 8px 4px 10px;
+                gap: 6px;
+            }
+
+            .user-name {
+                font-size: 12px;
+            }
+
+            .user-avatar {
+                width: 28px;
+                height: 28px;
+            }
+
+            .main-title {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+
+            .cards-container {
+                gap: 15px;
+            }
+
+            .card {
+                width: 240px;
+                height: 240px;
+            }
+
+            .card i {
+                font-size: 60px;
+            }
+
+            .card-title {
+                font-size: 22px;
+            }
+
+            .card-subtitle {
+                font-size: 11px;
+            }
+
+            .layer-school {
+                width: 200px;
+                bottom: 20%;
+            }
+
+            .layer-tree-1 {
+                width: 55px;
+            }
+
+            .layer-tree-2 {
+                width: 45px;
+            }
+        }
+
+        /* Ajuste para telas muito grandes */
+        @media (min-width: 1920px) {
+            .layer-school {
+                width: 450px;
+            }
+
+            .layer-tree-1 {
+                width: 130px;
+            }
+
+            .layer-tree-2 {
+                width: 100px;
+            }
+
+            .card {
+                width: 280px;
+                height: 280px;
+            }
+
+            .card i {
+                font-size: 85px;
+            }
+
+            .card-title {
+                font-size: 28px;
+            }
+
+            .main-title {
+                font-size: 38px;
+            }
         }
     </style>
 </head>
@@ -584,6 +856,8 @@
             window.addEventListener('resize', function () {
                 if (window.innerWidth <= 768) {
                     logoImg.style.height = '50px';
+                } else if (window.innerWidth <= 480) {
+                    logoImg.style.height = '45px';
                 } else {
                     logoImg.style.height = '67.5px';
                 }
@@ -592,6 +866,8 @@
             // Executar uma vez no carregamento
             if (window.innerWidth <= 768) {
                 logoImg.style.height = '50px';
+            } else if (window.innerWidth <= 480) {
+                logoImg.style.height = '45px';
             } else {
                 logoImg.style.height = '67.5px';
             }
