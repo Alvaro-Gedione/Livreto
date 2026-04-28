@@ -468,6 +468,198 @@
         }
 
         /* =========================================
+           ESTILOS DO ASSISTENTE (adicionado)
+           ========================================= */
+        
+        /* ASSISTENTE RESPONSIVO */
+        .assistant-wrapper {
+            position: fixed;
+            bottom: clamp(20px, 8vw, 30px);
+            right: clamp(15px, 5vw, 20px);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            max-width: min(90vw, 500px);
+        }
+
+        .assistant-wrapper.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border: 3px solid #FF69B4;
+            border-radius: 20px 20px 20px 5px;
+            padding: clamp(12px, 4vw, 20px) clamp(15px, 5vw, 25px);
+            margin-bottom: 10px;
+            width: 100%;
+            color: #5E3A5E;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 3.5vw, 1.1rem);
+            box-shadow: 0 5px 0 #FFB6C1, 0 8px 15px rgba(0, 0, 0, 0.1);
+            word-break: break-word;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: clamp(30px, 10vw, 60px);
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #FF69B4 transparent;
+        }
+
+        .assistant-char-img {
+            width: clamp(120px, 25vw, 200px);
+            height: auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .assistant-char-img:hover {
+            transform: scale(1.1) rotate(3deg);
+        }
+
+        .assistant-char-img:active {
+            transform: scale(0.95);
+        }
+
+        /* HELP EMOJI RESPONSIVO */
+        .help-emoji {
+            position: fixed;
+            bottom: clamp(20px, 8vw, 35px);
+            right: clamp(15px, 5vw, 35px);
+            background: #FF69B4;
+            color: white;
+            width: clamp(50px, 15vw, 70px);
+            height: clamp(50px, 15vw, 70px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            cursor: pointer;
+            box-shadow: 0 8px 0 #FFB6C1, 0 10px 20px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            animation: wiggle 2s infinite;
+            z-index: 999;
+            touch-action: manipulation;
+        }
+
+        @keyframes wiggle {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(10deg);
+            }
+            75% {
+                transform: rotate(-10deg);
+            }
+        }
+
+        .help-emoji:hover {
+            transform: scale(1.1);
+        }
+
+        .help-emoji:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 0 #FFB6C1, 0 8px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        /* TOAST MÁGICO RESPONSIVO */
+        .magic-toast {
+            position: fixed;
+            bottom: clamp(20px, 8vw, 30px);
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #FFF0F5;
+            color: #5E3A5E;
+            padding: clamp(10px, 3vw, 15px) clamp(15px, 5vw, 30px);
+            border-radius: min(40px, 8vw);
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            font-weight: 600;
+            box-shadow: 0 8px 0 #FFB6C1, 0 12px 20px rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 3vw, 15px);
+            max-width: min(90vw, 400px);
+            width: max-content;
+            pointer-events: none;
+        }
+
+        .magic-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .magic-toast i {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            color: #FF69B4;
+        }
+
+        /* CONFETTI */
+        .confetti {
+            position: absolute;
+            width: clamp(6px, 2vw, 10px);
+            height: clamp(6px, 2vw, 10px);
+            background: var(--brand-coral, #FF6B6B);
+            opacity: 0.7;
+            animation: confettiFall 3s linear infinite;
+            pointer-events: none;
+            border-radius: 50% 50% 0 50%;
+            z-index: 10000;
+        }
+
+        @keyframes confettiFall {
+            from {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Ajuste no modo escuro para o assistente */
+        body.dark-mode .speech-bubble {
+            background: #2E1B4A;
+            color: #FFE6F0;
+            border-color: #B983FF;
+        }
+
+        body.dark-mode .speech-bubble::after {
+            border-color: #B983FF transparent;
+        }
+
+        body.dark-mode .magic-toast {
+            background: #2E1B4A;
+            color: #FFE6F0;
+        }
+
+        body.dark-mode .help-emoji {
+            background: #B983FF;
+            box-shadow: 0 8px 0 #9B6BDF;
+        }
+
+        /* =========================================
            RESPONSIVIDADE
            ========================================= */
 
@@ -626,6 +818,14 @@
                 width: 55px;
                 right: 3%;
             }
+
+            .speech-bubble {
+                max-width: 250px;
+            }
+
+            .assistant-wrapper {
+                max-width: 280px;
+            }
         }
 
         /* Mobile pequeno (até 500px) */
@@ -644,23 +844,18 @@
                 width: 100%;
                 display: flex;
                 justify-content: center;
-                /* Centraliza a logo */
                 margin-bottom: 5px;
-                /* Espaço abaixo da logo */
             }
 
             .logo img {
                 max-width: 100%;
-                /* Garante que não estoure */
                 height: auto;
-                /* Mantém proporção */
             }
 
             nav {
                 gap: 8px;
                 flex-wrap: wrap;
                 justify-content: center;
-                /* Centraliza os botões */
                 width: 100%;
             }
 
@@ -713,18 +908,13 @@
                 font-size: 11px;
             }
 
-            /* --- MUDANÇAS DO PARALLAX (MENOR QUE 500px) --- */
-
-            /* --- MUDANÇAS DO PARALLAX (MENOR QUE 500px) --- */
-
-            /* Estica o chão na altura e deixa proporcional na largura */
+            /* Ajustes do paralax para mobile */
             .layer-ground-back,
             .layer-ground-mid,
             .layer-ground-front {
                 background-size: 100% 100%;
             }
 
-            /* Ajuste de altura e posição do chão para preencher bem a tela */
             .layer-ground-back {
                 height: 40vh;
                 bottom: 30%;
@@ -740,20 +930,15 @@
                 bottom: -5%;
             }
 
-            /* Escola mais centralizada e mais para cima */
             .layer-school {
                 width: 200px;
                 bottom: 35%;
-                /* Subiu para não afundar tanto no chão */
-                /* Centraliza: 50% da tela menos a metade da largura da escola (100px) */
                 left: 10px;
             }
 
-            /* Árvores acompanhando a escola no centro */
             .layer-tree-1 {
                 width: 55px;
                 bottom: 35%;
-                /* Posiciona à direita da escola centralizada */
                 right: 30px;
             }
 
@@ -761,6 +946,31 @@
                 width: 45px;
                 bottom: 37%;
                 right: 10px;
+            }
+
+            .help-emoji {
+                width: 55px;
+                height: 55px;
+                font-size: 2rem;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .assistant-wrapper {
+                bottom: 80px;
+                right: 15px;
+                max-width: 250px;
+            }
+
+            .speech-bubble {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .magic-toast {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+                max-width: 90%;
             }
         }
 
@@ -793,6 +1003,27 @@
 
             .main-title {
                 font-size: 38px;
+            }
+        }
+
+        /* ORIENTAÇÃO PAISAGEM EM MOBILE */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .help-emoji {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .assistant-wrapper {
+                bottom: 60px;
+                right: 10px;
+            }
+
+            .speech-bubble {
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -866,6 +1097,34 @@
         </div>
     </main>
 
+    <!-- ========================================= -->
+    <!-- ASSISTENTE (adicionado)                   -->
+    <!-- ========================================= -->
+    
+    <!-- Botão de ajuda/assistente -->
+    <div class="help-emoji" id="helpEmojiBtn">
+        <i class="fas fa-ellipsis-h"></i>
+    </div>
+
+    <!-- Toast para mensagens -->
+    <div id="magicToast" class="magic-toast">
+        <i class="fas fa-magic"></i>
+        <span id="toastMessage">✨ Mensagem mágica!</span>
+    </div>
+
+    <!-- Container do assistente -->
+    <div class="assistant-wrapper" id="assistantContainer">
+        <div class="speech-bubble" id="bubbleText">
+            Oi! Eu sou sua Prof. Clique em mim para conversarmos! 📖
+        </div>
+        <img src="src/img/Assistente00.png" alt="Assistente" class="assistant-char-img" id="assistantImage"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23FFD700\' /%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Cpath d=\'M30 65 Q50 80,70 65\' stroke=\'black\' stroke-width=\'5\' fill=\'none\' /%3E%3C/svg%3E'">
+    </div>
+
+    <!-- Scripts do assistente -->
+    <script src="./src/config.js"></script>
+    <script src="./src/assistent.js"></script>
+
     <script>
         // Lógica do Modo Dia/Noite
         const themeToggle = document.getElementById('themeToggle');
@@ -911,25 +1170,18 @@
         if (logoImg) {
             function updateLogoResponsive() {
                 if (window.innerWidth <= 500) {
-                    // AUMENTADO: de 45px para 80px
-                    logoImg.style.height = '80px';  // ALTERADO AQUI
-                    // Troca para a logo 02 em telas pequenas
+                    logoImg.style.height = '80px';
                     logoImg.src = 'src/img/logo02.png';
                 } else if (window.innerWidth <= 768) {
                     logoImg.style.height = '50px';
-                    // Volta para a logo normal
                     logoImg.src = 'src/img/logo.png';
                 } else {
                     logoImg.style.height = '67.5px';
-                    // Volta para a logo normal
                     logoImg.src = 'src/img/logo.png';
                 }
             }
 
-            // Executa no resize da tela
             window.addEventListener('resize', updateLogoResponsive);
-
-            // Executa uma vez no carregamento inicial da página
             updateLogoResponsive();
         }
 
@@ -938,45 +1190,28 @@
             const leaf = document.createElement('div');
             leaf.classList.add('leaf');
 
-            // Tamanhos variados para as folhas
-            const size = Math.random() * 20 + 15; // entre 15px e 35px
+            const size = Math.random() * 20 + 15;
             leaf.style.width = `${size}px`;
             leaf.style.height = `${size}px`;
-
-            // Posição horizontal aleatória
             leaf.style.left = `${Math.random() * 100}%`;
-
-            // Duração aleatória da animação (entre 8 e 20 segundos)
             const duration = Math.random() * 12 + 8;
-
-            // Tipo de animação aleatória
             const animationType = Math.floor(Math.random() * 3) + 1;
             let animation = '';
             if (animationType === 1) animation = 'fallLeaf1';
             else if (animationType === 2) animation = 'fallLeaf2';
             else animation = 'fallLeaf3';
-
             leaf.style.animation = `${animation} ${duration}s linear infinite`;
-
-            // Delay inicial aleatório
             leaf.style.animationDelay = `${Math.random() * -20}s`;
-
-            // Opacidade aleatória
             leaf.style.opacity = Math.random() * 0.5 + 0.3;
-
             return leaf;
         }
 
-        // Adicionar folhas ao container
         const parallaxContainer = document.querySelector('.parallax-container');
-
-        // Criar 30 folhas para um efeito mais natural
         for (let i = 0; i < 30; i++) {
             const leaf = createLeaf();
             parallaxContainer.appendChild(leaf);
         }
 
-        // Recriar folhas periodicamente para manter o número (opcional)
         setInterval(() => {
             const leaves = document.querySelectorAll('.leaf');
             if (leaves.length < 25) {
@@ -984,6 +1219,63 @@
                 parallaxContainer.appendChild(leaf);
             }
         }, 5000);
+
+        // Inicialização extra para garantir que o assistente funcione
+        // Aguarda o DOM carregar completamente
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pequeno delay para garantir que os scripts foram carregados
+            setTimeout(() => {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🌈 Bem-vindo ao Press Start!');
+                }
+            }, 1500);
+            
+            setTimeout(() => {
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🎮 Clique no robô para conversar com a Prof!');
+                }
+            }, 4000);
+        });
+
+        // Efeito de confetti para os cards
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            const colors = ['#FF69B4', '#FFD700', '#87CEEB', '#6FCF97', '#B983FF'];
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+            confetti.style.width = (Math.random() * 10 + 5) + 'px';
+            confetti.style.height = confetti.style.width;
+            document.body.appendChild(confetti);
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Adicionar evento de clique nos cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                for (let i = 0; i < 10; i++) {
+                    createConfetti();
+                }
+                if (typeof window.showToast === 'function') {
+                    window.showToast('🎉 Boa escolha! Vamos explorar!');
+                }
+                setTimeout(() => {
+                    window.location.href = card.getAttribute('href');
+                }, 500);
+            });
+        });
+
+        // Corrigir o clique no user-badge
+        document.querySelector('.user-badge')?.addEventListener('click', function() {
+            if (typeof window.showToast === 'function') {
+                window.showToast('✨ Olá, amiguinho! ✨');
+            }
+        });
+
     </script>
 
 </body>
