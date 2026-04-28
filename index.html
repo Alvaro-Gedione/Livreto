@@ -470,7 +470,7 @@
         /* =========================================
            RESPONSIVIDADE
            ========================================= */
-        
+
         /* Tablets (até 1024px) */
         @media (max-width: 1024px) {
             body {
@@ -604,7 +604,11 @@
             }
 
             /* Ajuste das nuvens para mobile */
-            .cloud-1, .cloud-2, .cloud-3, .cloud-4, .cloud-5 {
+            .cloud-1,
+            .cloud-2,
+            .cloud-3,
+            .cloud-4,
+            .cloud-5 {
                 transform: scale(0.7);
             }
 
@@ -624,8 +628,8 @@
             }
         }
 
-        /* Mobile pequeno (até 480px) */
-        @media (max-width: 480px) {
+        /* Mobile pequeno (até 500px) */
+        @media (max-width: 500px) {
             body {
                 padding-top: 140px;
             }
@@ -633,15 +637,31 @@
             header {
                 padding: 12px 15px;
                 gap: 12px;
+                flex-direction: column;
+            }
+
+            .logo {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                /* Centraliza a logo */
+                margin-bottom: 5px;
+                /* Espaço abaixo da logo */
             }
 
             .logo img {
-                height: 45px;
+                max-width: 100%;
+                /* Garante que não estoure */
+                height: auto;
+                /* Mantém proporção */
             }
 
             nav {
                 gap: 8px;
                 flex-wrap: wrap;
+                justify-content: center;
+                /* Centraliza os botões */
+                width: 100%;
             }
 
             .nav-btn {
@@ -693,17 +713,54 @@
                 font-size: 11px;
             }
 
-            .layer-school {
-                width: 200px;
-                bottom: 20%;
+            /* --- MUDANÇAS DO PARALLAX (MENOR QUE 500px) --- */
+
+            /* --- MUDANÇAS DO PARALLAX (MENOR QUE 500px) --- */
+
+            /* Estica o chão na altura e deixa proporcional na largura */
+            .layer-ground-back,
+            .layer-ground-mid,
+            .layer-ground-front {
+                background-size: 100% 100%;
             }
 
+            /* Ajuste de altura e posição do chão para preencher bem a tela */
+            .layer-ground-back {
+                height: 40vh;
+                bottom: 30%;
+            }
+
+            .layer-ground-mid {
+                height: 35vh;
+                bottom: 10%;
+            }
+
+            .layer-ground-front {
+                height: 45vh;
+                bottom: -5%;
+            }
+
+            /* Escola mais centralizada e mais para cima */
+            .layer-school {
+                width: 200px;
+                bottom: 35%;
+                /* Subiu para não afundar tanto no chão */
+                /* Centraliza: 50% da tela menos a metade da largura da escola (100px) */
+                left: 10px;
+            }
+
+            /* Árvores acompanhando a escola no centro */
             .layer-tree-1 {
                 width: 55px;
+                bottom: 35%;
+                /* Posiciona à direita da escola centralizada */
+                right: 30px;
             }
 
             .layer-tree-2 {
                 width: 45px;
+                bottom: 37%;
+                right: 10px;
             }
         }
 
@@ -847,30 +904,33 @@
             groundFront.style.transform = `translateY(${scrollY * -0.15}px)`;
         });
 
-        // Aumentar tamanho da logo sem aumentar altura da topbar
+        // Trocar Logo e ajustar tamanho baseando na largura da tela
         const logoImg = document.getElementById('logo-img');
         const headerElement = document.querySelector('header');
 
         if (logoImg) {
-            // Garantir que a logo mantenha proporção em telas menores
-            window.addEventListener('resize', function () {
-                if (window.innerWidth <= 768) {
+            function updateLogoResponsive() {
+                if (window.innerWidth <= 500) {
+                    // AUMENTADO: de 45px para 80px
+                    logoImg.style.height = '80px';  // ALTERADO AQUI
+                    // Troca para a logo 02 em telas pequenas
+                    logoImg.src = 'src/img/logo02.png';
+                } else if (window.innerWidth <= 768) {
                     logoImg.style.height = '50px';
-                } else if (window.innerWidth <= 480) {
-                    logoImg.style.height = '45px';
+                    // Volta para a logo normal
+                    logoImg.src = 'src/img/logo.png';
                 } else {
                     logoImg.style.height = '67.5px';
+                    // Volta para a logo normal
+                    logoImg.src = 'src/img/logo.png';
                 }
-            });
-
-            // Executar uma vez no carregamento
-            if (window.innerWidth <= 768) {
-                logoImg.style.height = '50px';
-            } else if (window.innerWidth <= 480) {
-                logoImg.style.height = '45px';
-            } else {
-                logoImg.style.height = '67.5px';
             }
+
+            // Executa no resize da tela
+            window.addEventListener('resize', updateLogoResponsive);
+
+            // Executa uma vez no carregamento inicial da página
+            updateLogoResponsive();
         }
 
         // Criar folhas caindo com posições aleatórias
