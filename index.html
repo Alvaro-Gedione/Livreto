@@ -1,1276 +1,212 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='90' font-size='90'%3E📚%3C/text%3E%3C/svg%3E">
-    <title>Livreto - Mundo Mágico da Leitura</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap"
-        rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Start - Escola Ideal</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        :root {
-            --brand-coral: #FF6B6B;
-            --brand-coral-gradient: #FF8E8E;
-            --brand-sun: #FFD93D;
-            --brand-sky: #6BCBFF;
-            --brand-mint: #6FCF97;
-            --brand-lavender: #B983FF;
-            --brand-pink: #FF9F9F;
-            --brand-silver: #9e9e9e;
-            --transition: all 0.3s ease;
-
-            --status-active: #6FCF97;
-            --status-idle: #FFD93D;
-            --status-off: #bdc3c7;
-            --status-alert: #FF6B6B;
-
-            /* Tamanhos responsivos */
-            --header-height: clamp(60px, 12vw, 90px);
-            --container-padding: clamp(15px, 5vw, 40px);
-            --card-min-width: clamp(240px, 85vw, 300px);
-            --font-size-base: clamp(14px, 4vw, 16px);
-            --font-size-title: clamp(1.8rem, 8vw, 3.8rem);
-            --font-size-subtitle: clamp(1rem, 5vw, 1.5rem);
-        }
-
-        /* Tema Claro (padrão) */
-        body.theme-light {
-            --bg-primary: #FFE8F8;
-            --bg-secondary: #E3F2FF;
-            --card-bg: linear-gradient(145deg, #FFFFFF, #FFF9E6);
-            --text-primary: #5E3A5E;
-            --text-secondary: #7A5C7A;
-            --border-color: rgba(255, 182, 193, 0.5);
-            --sidebar-bg: #FFFFFF;
-            --sidebar-header-bg: #FFF0F5;
-            --input-bg: #FFFFFF;
-            --panel-bg: #FFFFFF;
-            --toolbar-bg: #FFF5E6;
-            --card-bg-solid: #FFFFFF;
-            --hover-bg: rgba(255, 182, 193, 0.3);
-            --modal-bg: #FFFFFF;
-            --modal-header-bg: #FFF5E6;
-            --step-bg: #FFE5E5;
-            --step-current: var(--brand-coral);
-            --step-done: var(--brand-mint);
-            --header-gradient: linear-gradient(135deg, #FF9A9E, #FAD0C4, #FAD0C4);
-        }
-
-        /* Tema Escuro */
-        body.theme-dark {
-            --bg-primary: #2E1B4A;
-            --bg-secondary: #3E2B5A;
-            --card-bg: linear-gradient(145deg, #4A3A6A, #3A2A5A);
-            --text-primary: #FFE6F0;
-            --text-secondary: #DAB6E6;
-            --border-color: rgba(255, 218, 185, 0.2);
-            --sidebar-bg: #3E2B5A;
-            --sidebar-header-bg: #4E3B6A;
-            --input-bg: #4E3B6A;
-            --panel-bg: #3E2B5A;
-            --toolbar-bg: #4E3B6A;
-            --card-bg-solid: #3E2B5A;
-            --hover-bg: rgba(255, 182, 193, 0.3);
-            --modal-bg: #3E2B5A;
-            --modal-header-bg: #4E3B6A;
-            --step-bg: #4E3B6A;
-            --step-current: var(--brand-coral);
-            --step-done: var(--brand-mint);
-            --header-gradient: linear-gradient(135deg, #4A3A6A, #5E4A7A, #4A3A6A);
+            font-family: 'Baloo 2', cursive;
         }
 
         body {
-            font-family: 'Comic Neue', 'Quicksand', cursive, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            transition: background-color 0.4s ease, color 0.4s ease;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 10px 10px, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
-                radial-gradient(circle at 30px 30px, rgba(255, 255, 255, 0.2) 2px, transparent 2px);
-            background-size: 50px 50px, 100px 100px;
-            font-size: var(--font-size-base);
-        }
-
-        /* TOPBAR RESPONSIVA */
-        .magic-header {
-            background: var(--header-gradient);
-            padding: 0 var(--container-padding);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 5px 0 #FFB6C1, 0 10px 20px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px dotted white;
-            height: var(--header-height);
-            min-height: 60px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: clamp(10px, 3vw, 30px);
-            flex: 1;
-        }
-
-        .magic-logo {
-            display: flex;
-            align-items: center;
-            gap: clamp(5px, 2vw, 15px);
-        }
-
-        .logo-image {
-            height: clamp(40px, 8vw, 70px);
-            width: auto;
-            object-fit: contain;
-            animation: bounce 3s ease-in-out infinite;
-            filter: drop-shadow(0 5px 10px rgba(255, 105, 180, 0.3));
-        }
-
-        .logo-image:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .logo-text {
-            font-size: clamp(1.2rem, 5vw, 2rem);
-            font-weight: 700;
-            color: white;
-            text-shadow: 2px 2px 0 #FF69B4, 4px 4px 0 rgba(0, 0, 0, 0.2);
-            white-space: nowrap;
-        }
-
-        /* MENU HAMBÚRGUER PARA MOBILE */
-        .menu-toggle {
-            display: none;
-            font-size: clamp(1.5rem, 6vw, 2rem);
-            color: white;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.2);
-            width: clamp(40px, 10vw, 50px);
-            height: clamp(40px, 10vw, 50px);
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-            transition: var(--transition);
-            z-index: 1002;
-        }
-
-        .menu-toggle:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.1);
-        }
-
-        .menu-toggle.active {
-            background: #FF69B4;
-            transform: rotate(90deg);
-        }
-
-        /* NAVEGAÇÃO RESPONSIVA */
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: clamp(5px, 2vw, 10px);
-            transition: var(--transition);
-        }
-
-        .nav-item {
-            position: relative;
-            padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
-            cursor: pointer;
-            border-radius: 40px;
-            transition: var(--transition);
-            color: white;
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: clamp(4px, 1.5vw, 8px);
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid white;
-            white-space: nowrap;
-        }
-
-        .nav-item i:first-child {
-            font-size: clamp(1rem, 4vw, 1.3rem);
-        }
-
-        .nav-item i.fa-chevron-down {
-            font-size: 0.8rem;
-        }
-
-        .nav-item:hover {
-            background: #FFE4E1;
-            color: #FF69B4;
-            transform: translateY(-3px);
-            border-color: #FFD700;
-        }
-
-        /* DROPDOWNS RESPONSIVOS */
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #FFF0F5;
-            border-radius: 20px;
-            min-width: clamp(200px, 80vw, 250px);
-            box-shadow: 0 10px 0 #FFB6C1, 0 15px 20px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: var(--transition);
-            padding: 10px 0;
-            border: 3px solid #FFB6C1;
-            z-index: 1001;
-        }
-
-        .nav-item:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(5px);
-        }
-
-        .dropdown-content a {
-            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 25px);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #5E3A5E;
-            text-decoration: none;
-            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border-bottom: 1px dotted #FFB6C1;
-        }
-
-        .dropdown-content a:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-content a i {
-            width: 20px;
-            color: #FF69B4;
-            font-size: clamp(1rem, 4vw, 1.2rem);
-        }
-
-        .dropdown-content a:hover {
-            background: #FFE4E1;
-            color: #FF1493;
-            padding-left: 20px;
-        }
-
-        /* USER BADGE RESPONSIVO */
-        .user-area {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-        }
-
-        .user-badge {
-            display: flex;
-            align-items: center;
-            gap: clamp(5px, 2vw, 12px);
-            background: rgba(255, 255, 255, 0.3);
-            padding: clamp(5px, 1.5vw, 8px) clamp(10px, 3vw, 15px);
-            border-radius: 50px;
-            border: 2px solid white;
-            transition: var(--transition);
-            cursor: pointer;
-            min-width: fit-content;
-        }
-
-        .user-badge i {
-            color: white;
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            transition: all 0.3s ease;
-        }
-
-        .user-name {
-            color: white;
-            font-weight: 700;
-            font-size: clamp(0.8rem, 3vw, 1.1rem);
-            white-space: nowrap;
-            text-shadow: 1px 1px 0 #FF69B4;
-        }
-
-        .user-avatar {
-            width: clamp(35px, 8vw, 45px);
-            height: clamp(35px, 8vw, 45px);
-            min-width: 35px;
-            border-radius: 50%;
-            border: 3px solid #FFD700;
-            background: #FFE4E1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            color: #FF69B4;
-        }
-
-        .user-badge:hover {
-            transform: scale(1.02);
-            background: white;
-        }
-
-        .user-badge:hover i,
-        .user-badge:hover .user-name {
-            color: #FF69B4;
-            text-shadow: none;
-        }
-
-        /* CONTAINER PRINCIPAL RESPONSIVO */
-        .magic-container {
-            padding: var(--container-padding);
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            min-height: calc(100vh - var(--header-height));
-        }
-
-        /* TÍTULO MÁGICO RESPONSIVO */
-        .magic-title {
-            text-align: center;
-            margin-bottom: clamp(30px, 8vw, 50px);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .magic-title h1 {
-            font-size: var(--font-size-title);
-            background: linear-gradient(135deg, #FF69B4, #FFD700, #87CEEB);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 3px 3px 0 #FFB6C1, 5px 5px 0 rgba(0, 0, 0, 0.1);
-            font-family: 'Comic Neue', cursive;
-            line-height: 1.2;
-            padding: 0 10px;
-            word-break: break-word;
-        }
-
-        .magic-title p {
-            font-size: var(--font-size-subtitle);
-            color: var(--text-secondary);
-            margin-top: 10px;
-            background: rgba(255, 255, 255, 0.5);
-            display: inline-block;
-            padding: clamp(5px, 2vw, 10px) clamp(15px, 5vw, 30px);
-            border-radius: 50px;
-            border: 2px dotted #FF69B4;
-            max-width: 90%;
-        }
-
-        .magic-title i {
-            font-size: clamp(1.5rem, 6vw, 2.5rem);
-            margin: 0 clamp(5px, 2vw, 15px);
-            animation: bounce 2s infinite;
-            display: inline-block;
-            color: #FFD700;
-        }
-
-        /* GRID DE CARDS RESPONSIVO */
-        .magic-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-min-width)), 1fr));
-            gap: clamp(15px, 4vw, 30px);
-            padding: 10px 0;
-        }
-
-        .magic-card {
-            background: var(--card-bg);
-            border: 3px solid #FFB6C1;
-            border-radius: min(40px, 8vw);
-            padding: clamp(20px, 6vw, 40px) clamp(15px, 4vw, 25px);
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            transition: var(--transition);
-            position: relative;
             overflow: hidden;
-            color: var(--text-secondary);
-            box-shadow: 0 8px 0 #FFB6C1, 0 12px 20px rgba(0, 0, 0, 0.15);
-            min-height: clamp(200px, 50vw, 300px);
-            touch-action: manipulation;
         }
 
-        .magic-card::before {
-            content: '✨';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            font-size: clamp(1.2rem, 4vw, 2rem);
-            opacity: 0.5;
-        }
-
-        .magic-card::after {
-            content: '📚';
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            font-size: clamp(1.2rem, 4vw, 2rem);
-            opacity: 0.5;
-        }
-
-        .magic-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: #FFD700;
-            box-shadow: 0 12px 0 #FFD700, 0 15px 25px rgba(255, 105, 180, 0.4);
-        }
-
-        /* Touch feedback para mobile */
-        .magic-card:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
-        }
-
-        .magic-card i {
-            font-size: clamp(2.5rem, 12vw, 5rem);
-            background: linear-gradient(135deg, #FF69B4, #FFD700);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: clamp(10px, 4vw, 25px);
-            transition: var(--transition);
-        }
-
-        .magic-card span {
-            font-weight: 700;
-            font-size: clamp(1.1rem, 5vw, 1.5rem);
-            color: var(--text-primary);
-            text-align: center;
-            background: rgba(255, 255, 255, 0.3);
-            padding: clamp(3px, 1.5vw, 5px) clamp(8px, 3vw, 15px);
-            border-radius: 30px;
-            width: 100%;
-            word-break: break-word;
-        }
-
-        .magic-card small {
-            margin-top: clamp(8px, 3vw, 15px);
-            font-size: clamp(0.8rem, 3.5vw, 1.1rem);
-            color: var(--text-secondary);
-            background: #FFE4E1;
-            padding: clamp(3px, 1.5vw, 5px) clamp(8px, 3vw, 15px);
-            border-radius: 30px;
-            border: 2px dotted #FF69B4;
-            width: fit-content;
-        }
-
-        /* ASSISTENTE RESPONSIVO */
-        .assistant-wrapper {
-            position: fixed;
-            bottom: clamp(20px, 8vw, 30px);
-            right: clamp(15px, 5vw, 20px);
+        /* BARRA SUPERIOR (HEADER) */
+        header {
+            background-color: white;
+            padding: 15px 30px;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            z-index: 998;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: var(--transition);
-            /* Aumentei de 350px para 500px para suportar a imagem maior */
-            max-width: min(90vw, 500px);
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        .assistant-wrapper.is-visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        .logo {
+            color: #4f91e8;
+            font-size: 28px;
+            font-weight: 800;
         }
 
-        .speech-bubble {
-            position: relative;
-            background: white;
-            border: 3px solid #FF69B4;
-            border-radius: 20px 20px 20px 5px;
-            padding: clamp(12px, 4vw, 20px) clamp(15px, 5vw, 25px);
-            margin-bottom: 10px;
-            width: 100%;
-            color: #5E3A5E;
-            font-weight: 600;
-            font-size: clamp(0.8rem, 3.5vw, 1.1rem);
-            box-shadow: 0 5px 0 #FFB6C1, 0 8px 15px rgba(0, 0, 0, 0.1);
-            word-break: break-word;
+        nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
 
-        .speech-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            right: clamp(30px, 10vw, 60px);
-            border-width: 15px 15px 0;
-            border-style: solid;
-            border-color: #FF69B4 transparent;
-        }
-
-        .assistant-char-img {
-            /* Aumentado de (60px, 20vw, 80px) para os valores abaixo */
-            width: clamp(120px, 25vw, 200px);
-            height: auto;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            /* Adicionado margem para não encostar na borda direita do botão */
-            margin-right: 10px;
-        }
-
-        .assistant-char-img:hover {
-            transform: scale(1.1) rotate(3deg);
-        }
-
-        .assistant-char-img:active {
-            transform: scale(0.95);
-        }
-
-        /* HELP EMOJI RESPONSIVO */
-        .help-emoji {
-            position: fixed;
-            bottom: clamp(20px, 8vw, 35px);
-            right: clamp(15px, 5vw, 35px);
-            background: #FF69B4;
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
             color: white;
-            width: clamp(50px, 15vw, 70px);
-            height: clamp(50px, 15vw, 70px);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .nav-btn i {
+            font-size: 18px;
+        }
+
+        .bg-blue { background-color: #4f91e8; }
+        .bg-orange { background-color: #ffa45b; }
+        .bg-yellow { background-color: #ffcc14; }
+        .bg-red { background-color: #ff6b6b; }
+        .bg-green { background-color: #92b165; }
+
+        /* Círculo do usuário */
+        .user-circle {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4f91e8, #ffa45b);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            color: white;
             cursor: pointer;
-            box-shadow: 0 8px 0 #FFB6C1, 0 10px 20px rgba(255, 105, 180, 0.4);
-            transition: var(--transition);
-            border: 3px solid white;
-            animation: wiggle 2s infinite;
-            z-index: 999;
-            touch-action: manipulation;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 10px;
         }
 
-        @keyframes wiggle {
-
-            0%,
-            100% {
-                transform: rotate(0deg);
-            }
-
-            25% {
-                transform: rotate(10deg);
-            }
-
-            75% {
-                transform: rotate(-10deg);
-            }
-        }
-
-        .help-emoji:hover {
+        .user-circle:hover {
             transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .help-emoji:active {
-            transform: scale(0.95);
-            box-shadow: 0 4px 0 #FFB6C1, 0 8px 15px rgba(255, 105, 180, 0.4);
+        .user-circle i {
+            font-size: 24px;
         }
 
-        /* TOAST MÁGICO RESPONSIVO */
-        .magic-toast {
-            position: fixed;
-            bottom: clamp(20px, 8vw, 30px);
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #FFF0F5;
-            color: #5E3A5E;
-            padding: clamp(10px, 3vw, 15px) clamp(15px, 5vw, 30px);
-            border-radius: min(40px, 8vw);
-            font-size: clamp(0.9rem, 4vw, 1.2rem);
-            font-weight: 600;
-            box-shadow: 0 8px 0 #FFB6C1, 0 12px 20px rgba(0, 0, 0, 0.2);
-            border: 3px solid white;
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.3s ease;
+        /* CONTEÚDO PRINCIPAL */
+        main {
+            flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: clamp(8px, 3vw, 15px);
-            max-width: min(90vw, 400px);
-            width: max-content;
-            pointer-events: none;
+            padding-top: 30px;
         }
 
-        .magic-toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        .main-title {
+            color: #4f91e8;
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 50px;
         }
 
-        .magic-toast i {
-            font-size: clamp(1.2rem, 5vw, 1.8rem);
-            color: #FF69B4;
+        /* BOTÕES GIGANTES (CARDS) */
+        .cards-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 10%;
         }
 
-        /* CONFETTI */
-        .confetti {
-            position: absolute;
-            width: clamp(6px, 2vw, 10px);
-            height: clamp(6px, 2vw, 10px);
-            background: var(--brand-coral);
-            opacity: 0.7;
-            animation: confettiFall 3s linear infinite;
-            pointer-events: none;
-            border-radius: 50% 50% 0 50%;
+        .card {
+            width: 240px;
+            height: 240px;
+            border-radius: 25px;
+            border: 4px solid white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1), inset 0 -5px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
-        @keyframes confettiFall {
-            from {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+        .card:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
         }
 
-        /* SCROLLBAR PERSONALIZADA */
-        ::-webkit-scrollbar {
-            width: clamp(8px, 3vw, 12px);
+        .card i {
+            font-size: 70px;
+            margin-bottom: 20px;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #FFE4E1;
-            border-radius: 10px;
-            border: 2px dotted #FF69B4;
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #FF69B4, #FFD700);
-            border-radius: 10px;
-            border: 2px solid white;
+        .card-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 5px;
+            opacity: 0.9;
         }
 
-        /* DECORAÇÕES DE FUNDO RESPONSIVAS */
-        .magic-container::before {
-            content: '☁️☁️☁️';
-            position: absolute;
-            top: clamp(50px, 15vh, 150px);
-            left: 5px;
-            font-size: clamp(2rem, 10vw, 4rem);
-            opacity: 0.2;
-            transform: rotate(-10deg);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .magic-container::after {
-            content: '🌈🌈🌈';
-            position: absolute;
-            bottom: clamp(30px, 10vh, 80px);
-            right: 5px;
-            font-size: clamp(2rem, 10vw, 4rem);
-            opacity: 0.2;
-            transform: rotate(10deg);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* MEDIA QUERIES PRINCIPAIS */
-        @media (max-width: 1024px) {
-            .magic-grid {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: var(--header-height);
-                left: 0;
-                right: 0;
-                background: var(--header-gradient);
-                flex-direction: column;
-                align-items: stretch;
-                padding: 20px;
-                gap: 15px;
-                transform: translateY(-150%);
-                opacity: 0;
-                visibility: hidden;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-                border-bottom: 3px solid white;
-                z-index: 1001;
-                max-height: calc(100vh - var(--header-height));
-                overflow-y: auto;
-            }
-
-            .nav-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-item {
-                width: 100%;
-                justify-content: space-between;
-                padding: 15px;
-                font-size: 1.2rem;
-            }
-
-            .nav-label {
-                display: inline-block !important;
-            }
-
-            .dropdown-content {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                margin-top: 10px;
-                display: none;
-                width: 100%;
-            }
-
-            .nav-item.active .dropdown-content {
-                display: block;
-            }
-
-            .nav-item i.fa-chevron-down {
-                transition: transform 0.3s;
-            }
-
-            .nav-item.active i.fa-chevron-down {
-                transform: rotate(180deg);
-            }
-
-            .user-badge {
-                padding: 5px 10px;
-            }
-
-            .user-name {
-                display: none;
-            }
-
-            .magic-grid {
-                gap: 20px;
-            }
-
-            .speech-bubble {
-                max-width: 250px;
-            }
-
-            .assistant-wrapper {
-                max-width: 280px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo-text {
-                display: none;
-            }
-
-            .magic-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .magic-card {
-                min-height: auto;
-                padding: 25px 15px;
-            }
-
-            .magic-card i {
-                font-size: 3.5rem;
-            }
-
-            .magic-card span {
-                font-size: 1.2rem;
-            }
-
-            .magic-card small {
-                font-size: 0.9rem;
-            }
-
-            .magic-title h1 {
-                font-size: 2rem;
-            }
-
-            .magic-title i {
-                font-size: 1.5rem;
-                margin: 0 5px;
-            }
-
-            .magic-title p {
-                font-size: 0.9rem;
-            }
-
-            .help-emoji {
-                width: 55px;
-                height: 55px;
-                font-size: 2rem;
-                bottom: 15px;
-                right: 15px;
-            }
-
-            .assistant-wrapper {
-                bottom: 80px;
-                right: 15px;
-                max-width: 250px;
-            }
-
-            .speech-bubble {
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-
-            .magic-toast {
-                font-size: 0.9rem;
-                padding: 10px 15px;
-                max-width: 90%;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .magic-title h1 {
-                font-size: 1.6rem;
-            }
-
-            .magic-card {
-                padding: 20px 10px;
-            }
-
-            .magic-card i {
-                font-size: 3rem;
-            }
-
-            .magic-card span {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* ORIENTAÇÃO PAISAGEM EM MOBILE */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .magic-header {
-                height: 50px;
-            }
-
-            .magic-container {
-                padding: 15px;
-            }
-
-            .magic-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-
-            .magic-card {
-                padding: 15px 10px;
-            }
-
-            .magic-card i {
-                font-size: 2.5rem;
-                margin-bottom: 5px;
-            }
-
-            .magic-card span {
-                font-size: 1rem;
-            }
-
-            .magic-card small {
-                display: none;
-            }
-
-            .help-emoji {
-                width: 45px;
-                height: 45px;
-                font-size: 1.5rem;
-                bottom: 10px;
-                right: 10px;
-            }
-
-            .assistant-wrapper {
-                bottom: 60px;
-                right: 10px;
-            }
-
-            .speech-bubble {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-        }
-
-        /* ALTA RESOLUÇÃO */
-        @media (min-width: 1440px) {
-            .magic-container {
-                max-width: 1600px;
-                padding: 60px 50px;
-            }
-
-            .magic-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        /* TOUCH DEVICES - remover hover que pode causar problemas */
-        @media (hover: none) and (pointer: coarse) {
-            .magic-card:hover {
-                transform: none;
-            }
-
-            .magic-card:active {
-                transform: scale(0.98);
-            }
-
-            .nav-item:hover {
-                background: rgba(255, 255, 255, 0.3);
-                color: white;
-                transform: none;
-            }
-
-            .dropdown-content {
-                display: none;
-            }
-
-            .nav-item.active .dropdown-content {
-                display: block;
-            }
-        }
+        .card-orange { background-color: #ffa45b; }
+        .card-yellow { background-color: #ffcc14; }
+        .card-blue { background-color: #4f91e8; }
+        .card-green { background-color: #92b165; }
+        
     </style>
 </head>
+<body>
 
-<body class="theme-light">
-    <!-- HEADER RESPONSIVO -->
-    <header class="magic-header">
-        <div class="logo-area">
-            <div class="magic-logo">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23FFD700' /%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E"
-                    alt="Livreto Kids Logo" class="logo-image">
-                <span class="logo-text">Livreto</span>
+    <header>
+        <div class="logo">PRESS START</div>
+        <nav>
+            <a href="#" class="nav-btn bg-orange"><i class="fa-solid fa-gamepad"></i> Joguinho</a>
+            <a href="#" class="nav-btn bg-yellow"><i class="fa-solid fa-book-open"></i> História</a>
+            <a href="#" class="nav-btn bg-red"><i class="fa-solid fa-gear"></i> Configuração</a>
+            <div class="user-circle">
+                <i class="fa-solid fa-user"></i>
             </div>
-
-            <!-- Menu Hambúrguer para mobile -->
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </div>
-
-            <nav class="nav-menu" id="navMenu">
-                <!-- Dropdown Histórias -->
-                <div class="nav-item" id="navHistorias">
-                    <i class="fas fa-book-open"></i>
-                    <span class="nav-label">Histórias</span>
-                    <i class="fas fa-chevron-down"></i>
-                    <div class="dropdown-content">
-                        <a href="#"><i class="fas fa-dragon"></i> Dragões</a>
-                        <a href="#"><i class="fas fa-robot"></i> Robôs</a>
-                        <a href="#"><i class="fas fa-fish"></i> Fundo do Mar</a>
-                        <a href="#"><i class="fas fa-tree"></i> Floresta</a>
-                        <a href="#"><i class="fas fa-star"></i> Espaço</a>
-                    </div>
-                </div>
-
-                <!-- Dropdown Brincadeiras -->
-                <div class="nav-item" id="navBrincadeiras">
-                    <i class="fas fa-paint-brush"></i>
-                    <span class="nav-label">Brincadeiras</span>
-                    <i class="fas fa-chevron-down"></i>
-                    <div class="dropdown-content">
-                        <a href="#"><i class="fas fa-puzzle-piece"></i> Quebra-Cabeça</a>
-                        <a href="#"><i class="fas fa-memory"></i> Memória</a>
-                        <a href="#"><i class="fas fa-paint-roller"></i> Colorir</a>
-                        <a href="game.html"><i class="fas fa-graduation-cap"></i> Escola dos Sonhos</a>
-                    </div>
-                </div>
-
-                <!-- Dropdown Conquistas -->
-                <div class="nav-item" id="navConquistas">
-                    <i class="fas fa-crown"></i>
-                    <span class="nav-label">Conquistas</span>
-                    <i class="fas fa-chevron-down"></i>
-                    <div class="dropdown-content">
-                        <a href="#"><i class="fas fa-star"></i> Meus Prêmios</a>
-                        <a href="#"><i class="fas fa-trophy"></i> Troféus</a>
-                        <a href="#"><i class="fas fa-medal"></i> Medalhas</a>
-                        <a href="#"><i class="fas fa-gem"></i> Tesouros</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
-        <!-- Área do usuário -->
-        <div class="user-area">
-            <div class="user-badge">
-                <i class="fas fa-sun" id="themeToggle"></i>
-                <i class="fas fa-bell"></i>
-                <span class="user-name">Amiguinho</span>
-                <div class="user-avatar">
-                    <i class="fas fa-smile"></i>
-                </div>
-            </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="magic-container">
-        <div class="magic-title">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-heart"></i>
-            <h1>📖 Mundo Mágico da Leitura</h1>
-            <i class="fas fa-heart"></i>
-            <i class="fas fa-star"></i>
-            <p>Onde cada página é uma nova aventura!</p>
-        </div>
-
-        <div class="magic-grid">
-            <a href="#" class="magic-card">
-                <i class="fas fa-dragon"></i>
-                <span>Aventuras com Dragões</span>
-                <small>12 histórias mágicas</small>
+    <main>
+        <h1 class="main-title">Press Start: Escola Ideal</h1>
+        
+        <div class="cards-container">
+            <a href="#" class="card card-orange">
+                <i class="fa-solid fa-gamepad"></i>
+                <div class="card-title">Joguinho</div>
+                <div class="card-subtitle">A escola dos sonhos</div>
             </a>
 
-            <a href="#" class="magic-card">
-                <i class="fas fa-rocket"></i>
-                <span>Viagem Espacial</span>
-                <small>Explore planetas</small>
+            <a href="#" class="card card-yellow">
+                <i class="fa-solid fa-book-open"></i>
+                <div class="card-title">História</div>
+                <div class="card-subtitle">Nossa trajetória</div>
             </a>
 
-            <a href="#" class="magic-card">
-                <i class="fas fa-fish"></i>
-                <span>Fundo do Mar</span>
-                <small>Conheça sereias</small>
-            </a>
-
-            <a href="#" class="magic-card">
-                <i class="fas fa-tree"></i>
-                <span>Floresta Encantada</span>
-                <small>Animais falantes</small>
-            </a>
-
-            <a href="#" class="magic-card">
-                <i class="fas fa-paint-brush"></i>
-                <span>Colorir e Criar</span>
-                <small>Desenhos mágicos</small>
-            </a>
-
-            <a href="#" class="magic-card">
-                <i class="fas fa-music"></i>
-                <span>Músicas e Cantigas</span>
-                <small>Canções divertidas</small>
-            </a>
-
-            <a href="#" class="magic-card">
-                <i class="fas fa-puzzle-piece"></i>
-                <span>Jogos e Desafios</span>
-                <small>Teste sua mente</small>
-            </a>
-
-            <a href="#" class="magic-card">
-                <i class="fas fa-users"></i>
-                <span>Meus Amiguinhos</span>
-                <small>Leia com amigos</small>
+            <a href="#" class="card card-blue">
+                <i class="fa-solid fa-trophy"></i>
+                <div class="card-title">Prêmios</div>
+                <div class="card-subtitle">Reconhecimentos</div>
             </a>
         </div>
     </main>
-    <div class="help-emoji" id="helpEmojiBtn">
-        🤖
-    </div>
 
-    <div id="magicToast" class="magic-toast">
-        <i class="fas fa-magic"></i>
-        <span id="toastMessage">✨ Mensagem mágica!</span>
-    </div>
-
-    <div class="assistant-wrapper" id="assistantContainer">
-        <div class="speech-bubble" id="bubbleText">
-            Oi! Eu sou sua Prof do Livreto. Clique em mim para conversarmos! 📖
-        </div>
-        <!-- ALTERE ESTA LINHA: mude o src para o caminho da sua imagem -->
-        <img src="Assistente01.png" alt="Assistente" class="assistant-char-img" id="assistantImage"
-            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23FFD700\' /%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Cpath d=\'M30 65 Q50 80,70 65\' stroke=\'black\' stroke-width=\'5\' fill=\'none\' /%3E%3C/svg%3E'">
-    </div>
-    <script src="./config.js"></script>
-    <script src="./assistent.js"></script>
-
-    <script>
-        // Gerenciamento de Tema
-        const themeToggle = document.getElementById('themeToggle');
-        let currentTheme = localStorage.getItem('theme') || 'light';
-
-        document.body.className = `theme-${currentTheme}`;
-        themeToggle.className = currentTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-
-        themeToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-            localStorage.setItem('theme', currentTheme);
-            document.body.className = `theme-${currentTheme}`;
-            themeToggle.className = currentTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-
-            // Usar função showToast do assistent.js
-            if (typeof window.showToast === 'function') {
-                window.showToast(currentTheme === 'light' ? '☀️ Modo Dia Ativado!' : '🌙 Boa noite, estrelinha!');
-            }
-        });
-
-        // Menu Hambúrguer
-        const menuToggle = document.getElementById('menuToggle');
-        const navMenu = document.getElementById('navMenu');
-        const navItems = document.querySelectorAll('.nav-item');
-
-        if (menuToggle) {
-            menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                menuToggle.classList.toggle('active');
-                navMenu.classList.toggle('active');
-
-                const icon = menuToggle.querySelector('i');
-                if (icon) {
-                    icon.className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
-                }
-            });
-        }
-
-        // Fechar menu ao clicar fora
-        document.addEventListener('click', (e) => {
-            if (navMenu && navMenu.classList.contains('active') &&
-                !navMenu.contains(e.target) &&
-                !menuToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                if (icon) {
-                    icon.className = 'fas fa-bars';
-                }
-            }
-        });
-
-        // Dropdowns em mobile
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Fecha outros dropdowns
-                    navItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-
-                    item.classList.toggle('active');
-                }
-            });
-        });
-
-        // REMOVIDA a função showToast daqui - ela já existe no assistent.js
-
-        // Efeito de confetti ao clicar nos cards
-        document.querySelectorAll('.magic-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                // Cria confetti
-                for (let i = 0; i < 10; i++) {
-                    createConfetti();
-                }
-
-                // Usar função showToast do assistent.js
-                if (typeof window.showToast === 'function') {
-                    window.showToast('🎉 Boa escolha! Vamos ler essa história!');
-                }
-
-                // Simula um clique real após a animação
-                setTimeout(() => {
-                    window.location.href = card.getAttribute('href');
-                }, 500);
-            });
-        });
-
-        // Função para criar confetti
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-
-            const colors = ['#FF69B4', '#FFD700', '#87CEEB', '#6FCF97', '#B983FF'];
-            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
-            confetti.style.width = (Math.random() * 10 + 5) + 'px';
-            confetti.style.height = confetti.style.width;
-
-            document.body.appendChild(confetti);
-
-            setTimeout(() => {
-                confetti.remove();
-            }, 5000);
-        }
-
-        // REMOVIDA a parte do Assistente daqui - ela já existe no assistent.js
-        // O assistent.js já gerencia o helpBtn, assistantContainer, etc.
-
-        // Boas-vindas (usando showToast do assistent.js)
-        setTimeout(() => {
-            if (typeof window.showToast === 'function') {
-                window.showToast('🌈 Bem-vindo ao mundo mágico do Livreto!');
-            }
-        }, 1000);
-
-        setTimeout(() => {
-            if (typeof window.showToast === 'function') {
-                window.showToast('📖 Escolha uma história para começar!');
-            }
-        }, 4000);
-
-        // Animação nos ícones do header
-        setInterval(() => {
-            document.querySelectorAll('.nav-item i:first-child').forEach(icon => {
-                icon.style.transform = 'rotate(15deg) scale(1.2)';
-                setTimeout(() => icon.style.transform = '', 300);
-            });
-        }, 4000);
-
-        // Gerenciar orientação da tela
-        function handleOrientationChange() {
-            if (window.innerHeight < 500 && window.innerWidth > window.innerHeight) {
-                document.body.classList.add('landscape');
-            } else {
-                document.body.classList.remove('landscape');
-            }
-        }
-
-        window.addEventListener('resize', handleOrientationChange);
-        handleOrientationChange();
-
-        // Corrigir o onclick do user-badge
-        document.querySelector('.user-badge')?.addEventListener('click', function () {
-            if (typeof window.showToast === 'function') {
-                window.showToast('✨ Olá, amiguinho! ✨');
-            }
-        });
-    </script>
 </body>
-
 </html>

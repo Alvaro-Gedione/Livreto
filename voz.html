@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - Áudio Nativo</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00e5ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #status {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border: 4px solid #00e5ff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00e5ff, inset 0 0 20px #00e5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .circle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px #00e5ff, inset 0 0 30px #00e5ff;
+        }
+
+        .speaking {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px #00e5ff, inset 0 0 30px #00e5ff;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1.1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 25px;
+            background: transparent;
+            border: 1px solid #00e5ff;
+            color: #00e5ff;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00e5ff;
+            color: #000;
+            box-shadow: 0 0 20px #00e5ff;
+        }
+
+        #input-area {
+            margin-top: 30px;
+            width: 80%;
+            max-width: 500px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid #00e5ff;
+            color: #00e5ff;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00e5ff;
+        }
+
+        #user-input::placeholder {
+            color: rgba(0, 229, 255, 0.5);
+        }
+
+        .progress-bar {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 500px;
+            height: 4px;
+            background: rgba(0, 229, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #00e5ff;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .chunk-counter {
+            margin-top: 10px;
+            font-size: 12px;
+            color: rgba(0, 229, 255, 0.7);
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="status">⚡ JARVIS OFFLINE</div>
+    <div class="circle" id="jarvis-orb" onclick="startJarvisWithInput()">
+        <div style="width: 50%; height: 50%; border: 2px solid #00e5ff; border-radius: 50%;"></div>
+    </div>
+
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Digite sua mensagem para o Jarvis..." 
+               onkeypress="if(event.key === 'Enter') startJarvisWithInput()">
+        <button onclick="startJarvisWithInput()">Enviar</button>
+    </div>
+
+    <div class="progress-bar" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="chunk-counter" id="chunk-counter"></div>
+
+    <button onclick="startJarvisDemo()">🎤 Demonstração: "Apresente-se como Jarvis"</button>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
+
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // ================= CONFIGURAÇÃO =================
+        const API_KEY = "AIzaSyC81LZOFpkjq68g1q5MIUOB17I5V5vjbEs"; // <-- COLOQUE SUA API KEY AQUI
+        const AUDIO_MODEL = "gemini-2.5-flash-native-audio-preview-12-2025";
+        
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        
+        // Elementos DOM
+        const statusDiv = document.getElementById('status');
+        const orb = document.getElementById('jarvis-orb');
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        const chunkCounter = document.getElementById('chunk-counter');
+        const userInput = document.getElementById('user-input');
+
+        // Estado global
+        let audioContext = null;
+        let isPlaying = false;
+        let audioQueue = []; // Para armazenar chunks de áudio
+        let totalChunks = 0;
+        let loadedChunks = 0;
+
+        // ================= UTILITÁRIOS =================
+        function setStatus(text, isError = false) {
+            statusDiv.innerHTML = text;
+            statusDiv.style.color = isError ? '#ff3366' : '#00e5ff';
+            console.log(`[STATUS] ${text}`);
+        }
+
+        function setListening() {
+            statusDiv.innerHTML = "🎧 OUVINDO";
+            orb.classList.remove('speaking');
+        }
+
+        function setThinking() {
+            statusDiv.innerHTML = "🧠 PROCESSANDO";
+            orb.classList.remove('speaking');
+        }
+
+        function setSpeaking() {
+            statusDiv.innerHTML = "🔊 FALANDO";
+            orb.classList.add('speaking');
+        }
+
+        function setIdle() {
+            statusDiv.innerHTML = "⚡ JARVIS ONLINE";
+            orb.classList.remove('speaking');
+            progressBar.style.display = 'none';
+            chunkCounter.innerHTML = '';
+        }
+
+        function updateProgress(current, total) {
+            if (total === 0) return;
+            const percent = (current / total) * 100;
+            progressFill.style.width = `${percent}%`;
+            chunkCounter.innerHTML = `📦 Baixando áudio: ${current}/${total} chunks (${Math.round(percent)}%)`;
+        }
+
+        // ================= PROCESSAMENTO DE ÁUDIO =================
+        async function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                await audioContext.resume();
+            }
+            return audioContext;
+        }
+
+        // Converte PCM16 (raw) para ArrayBuffer para Web Audio API
+        async function pcmToAudioBuffer(pcmData, sampleRate = 24000) {
+            const ctx = await initAudioContext();
+            
+            // PCM16 little-endian para Float32
+            const int16Array = new Int16Array(pcmData);
+            const float32Array = new Float32Array(int16Array.length);
+            
+            for (let i = 0; i < int16Array.length; i++) {
+                float32Array[i] = int16Array[i] / 32768.0;
+            }
+            
+            const audioBuffer = ctx.createBuffer(1, float32Array.length, sampleRate);
+            audioBuffer.copyToChannel(float32Array, 0);
+            
+            return audioBuffer;
+        }
+
+        // Reproduz uma lista de AudioBuffers em sequência
+        async function playAudioBuffers(audioBuffers) {
+            if (audioBuffers.length === 0) return;
+            
+            const ctx = await initAudioContext();
+            
+            // Se já está tocando, aguarda
+            while (isPlaying) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            isPlaying = true;
+            setSpeaking();
+            
+            let currentTime = ctx.currentTime;
+            
+            for (let i = 0; i < audioBuffers.length; i++) {
+                const source = ctx.createBufferSource();
+                source.buffer = audioBuffers[i];
+                source.connect(ctx.destination);
+                
+                // Agenda a reprodução
+                source.start(currentTime);
+                currentTime += audioBuffers[i].duration;
+            }
+            
+            // Aguarda o término da reprodução
+            const totalDuration = currentTime - ctx.currentTime;
+            await new Promise(resolve => setTimeout(resolve, totalDuration * 1000 + 500));
+            
+            isPlaying = false;
+            setIdle();
+        }
+
+        // ================= COMUNICAÇÃO COM GEMINI (ÁUDIO NATIVO) =================
+        async function sendAndReceiveAudioStream(prompt) {
+            if (!prompt || prompt.trim() === '') {
+                setStatus("⚠️ Digite uma mensagem primeiro!", true);
+                return;
+            }
+            
+            setThinking();
+            progressBar.style.display = 'block';
+            progressFill.style.width = '0%';
+            loadedChunks = 0;
+            totalChunks = 0;
+            audioQueue = [];
+            
+            try {
+                console.log(`[JARVIS] Enviando prompt: "${prompt}"`);
+                
+                // Inicializa o modelo com suporte a áudio
+                const model = genAI.getGenerativeModel({
+                    model: AUDIO_MODEL,
+                    generationConfig: {
+                        temperature: 0.7,
+                        topP: 0.95,
+                        // Configuração para saída de áudio
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: {
+                                prebuiltVoiceConfig: {
+                                    voiceName: "Charon" // Voz do Jarvis
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Inicia a sessão de chat com streaming
+                const chat = model.startChat();
+                
+                // Envia a mensagem e aguarda resposta em stream
+                const result = await chat.sendMessageStream(prompt);
+                
+                const audioBuffers = [];
+                let chunkIndex = 0;
+                
+                // Processa o stream de resposta
+                for await (const chunk of result.stream) {
+                    // Verifica se o chunk contém áudio
+                    if (chunk.candidates && chunk.candidates[0] && 
+                        chunk.candidates[0].content && chunk.candidates[0].content.parts) {
+                        
+                        for (const part of chunk.candidates[0].content.parts) {
+                            // Se for áudio inline
+                            if (part.inlineData && part.inlineData.data && part.inlineData.mimeType === 'audio/pcm') {
+                                // Decodifica base64 para ArrayBuffer
+                                const base64Data = part.inlineData.data;
+                                const binaryString = atob(base64Data);
+                                const bytes = new Uint8Array(binaryString.length);
+                                for (let i = 0; i < binaryString.length; i++) {
+                                    bytes[i] = binaryString.charCodeAt(i);
+                                }
+                                
+                                console.log(`[Chunk ${++chunkIndex}] Recebido ${bytes.length} bytes PCM`);
+                                
+                                // Converte PCM para AudioBuffer
+                                const audioBuffer = await pcmToAudioBuffer(bytes.buffer, 24000);
+                                audioBuffers.push(audioBuffer);
+                                
+                                // Atualiza progresso
+                                loadedChunks = chunkIndex;
+                                totalChunks = chunkIndex; // Ainda não sabemos o total
+                                updateProgress(loadedChunks, totalChunks);
+                            }
+                            // Fallback: se vier texto (caso o modelo não retorne áudio)
+                            else if (part.text) {
+                                console.log(`[Texto alternativo] ${part.text}`);
+                                // Se veio texto em vez de áudio, usa síntese de voz
+                                if (audioBuffers.length === 0) {
+                                    setStatus("🎤 Modo texto - sintetizando voz...");
+                                    await speakWithFallback(part.text);
+                                    setIdle();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                totalChunks = chunkIndex;
+                updateProgress(totalChunks, totalChunks);
+                
+                if (audioBuffers.length === 0) {
+                    setStatus("❌ Nenhum áudio recebido do modelo", true);
+                    return;
+                }
+                
+                console.log(`[JARVIS] Total de chunks de áudio: ${audioBuffers.length}`);
+                setStatus(`✅ Áudio recebido (${audioBuffers.length} chunks) - Reproduzindo...`);
+                
+                // Reproduz todos os chunks em sequência
+                await playAudioBuffers(audioBuffers);
+                
+            } catch (error) {
+                console.error('[ERRO]', error);
+                setStatus(`❌ Erro: ${error.message}`, true);
+                
+                // Fallback para síntese de voz local
+                await speakWithFallback(prompt);
+            } finally {
+                progressBar.style.display = 'none';
+                chunkCounter.innerHTML = '';
+                if (!isPlaying) {
+                    setIdle();
+                }
+            }
+        }
+        
+        // ================= FALLBACK: Síntese de voz local =================
+        async function speakWithFallback(text) {
+            setStatus("🎤 Sintetizando voz localmente...");
+            
+            // Aguarda vozes carregarem
+            await new Promise(resolve => {
+                if (speechSynthesis.getVoices().length > 0) {
+                    resolve();
+                } else {
+                    speechSynthesis.addEventListener('voiceschanged', resolve, { once: true });
+                }
+            });
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            const voices = speechSynthesis.getVoices();
+            
+            // Tenta encontrar uma voz masculina e grave
+            let jarvisVoice = voices.find(v => 
+                v.name.includes('Google UK English Male') ||
+                v.name.includes('Google US English Male') ||
+                v.name.includes('Microsoft David') ||
+                (v.lang === 'en-US' && v.name.toLowerCase().includes('male'))
+            );
+            
+            if (!jarvisVoice) {
+                jarvisVoice = voices.find(v => v.lang === 'en-US');
+            }
+            
+            utterance.voice = jarvisVoice || voices[0];
+            utterance.pitch = 0.8;
+            utterance.rate = 0.9;
+            utterance.volume = 1;
+            
+            setSpeaking();
+            
+            utterance.onend = () => {
+                setIdle();
+            };
+            
+            utterance.onerror = (e) => {
+                console.error('Erro na síntese:', e);
+                setIdle();
+            };
+            
+            speechSynthesis.cancel(); // Cancela qualquer fala pendente
+            speechSynthesis.speak(utterance);
+        }
+        
+        // ================= DEMONSTRAÇÃO =================
+        async function startJarvisDemo() {
+            if (!API_KEY || API_KEY === "SUA_CHAVE_API_AQUI") {
+                setStatus("⚠️ Configure sua API_KEY no código primeiro!", true);
+                return;
+            }
+            
+            const demoPrompt = "Apresente-se como Jarvis e diga que os sistemas estão operacionais. Use sua voz característica.";
+            await sendAndReceiveAudioStream(demoPrompt);
+        }
+        
+        // ================= INTERFACE DO USUÁRIO =================
+        async function startJarvisWithInput() {
+            if (!API_KEY || API_KEY === "SUA_CHAVE_API_AQUI") {
+                setStatus("⚠️ Configure sua API_KEY no código primeiro!", true);
+                return;
+            }
+            
+            const userMessage = userInput.value.trim();
+            if (!userMessage) {
+                setStatus("⚠️ Digite uma mensagem!", true);
+                setTimeout(() => setIdle(), 1500);
+                return;
+            }
+            
+            userInput.value = '';
+            await sendAndReceiveAudioStream(userMessage);
+        }
+        
+        // Inicialização
+        function init() {
+            setIdle();
+            
+            // Pré-carrega o AudioContext (requer interação do usuário)
+            orb.addEventListener('click', async () => {
+                await initAudioContext();
+                console.log('[Audio] Contexto inicializado');
+            });
+            
+            // Carrega vozes para fallback
+            if (speechSynthesis) {
+                speechSynthesis.getVoices();
+            }
+            
+            console.log('[JARVIS] Web client iniciado');
+            console.log(`[Modelo] ${AUDIO_MODEL}`);
+        }
+        
+        // Exporta funções para o escopo global (para onclick)
+        window.startJarvisDemo = startJarvisDemo;
+        window.startJarvisWithInput = startJarvisWithInput;
+        
+        // Inicia
+        init();
+    </script>
+</body>
+
+</html>
