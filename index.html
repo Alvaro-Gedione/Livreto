@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Press Start - Escola Ideal</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
+        /* VARIÁVEIS DE TEMA (Modo Claro Padrão) */
+        :root {
+            --bg-sky: #d4f6ff;
+            --brightness-assets: 1;
+        }
+
+        /* MODO ESCURO (Noite) */
+        body.dark-mode {
+            --bg-sky: #1a233a;
+            --brightness-assets: 0.6;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,30 +31,284 @@
         }
 
         body {
-            background-image: url('background.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
+            padding-top: 85px;
+            background-color: var(--bg-sky);
+            transition: background-color 0.8s ease;
+            min-height: 150vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           BACKGROUND PARALLAX (Camadas)
+           ========================================= */
+        /* Ajustar o z-index do parallax para não sobrepor o header */
+        .parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            /* ALTERAR de -1 para 0 */
+            pointer-events: none;
             overflow: hidden;
         }
 
-        /* BARRA SUPERIOR (HEADER) */
+
+        /* Nuvens animadas - Múltiplas nuvens com posições diferentes */
+        .cloud {
+            position: absolute;
+            background-image: url('src/img/background/cloud.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            animation: floatCloud linear infinite;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        /* Nuvem 1 */
+        .cloud-1 {
+            top: 5%;
+            left: -150px;
+            width: 180px;
+            height: 100px;
+            animation-duration: 35s;
+            animation-delay: 0s;
+        }
+
+        /* Nuvem 2 */
+        .cloud-2 {
+            top: 15%;
+            left: -200px;
+            width: 250px;
+            height: 140px;
+            animation-duration: 45s;
+            animation-delay: -10s;
+        }
+
+        /* Nuvem 3 */
+        .cloud-3 {
+            top: 25%;
+            left: -120px;
+            width: 160px;
+            height: 90px;
+            animation-duration: 30s;
+            animation-delay: -20s;
+        }
+
+        /* Nuvem 4 */
+        .cloud-4 {
+            top: 8%;
+            left: -300px;
+            width: 220px;
+            height: 120px;
+            animation-duration: 50s;
+            animation-delay: -5s;
+        }
+
+        /* Nuvem 5 */
+        .cloud-5 {
+            top: 20%;
+            left: -180px;
+            width: 140px;
+            height: 80px;
+            animation-duration: 38s;
+            animation-delay: -15s;
+        }
+
+        /* Escola e Árvores - Atrás do chão */
+        .layer-school {
+            position: absolute;
+            bottom: 30%;
+            left: 2%;
+            width: 350px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        .layer-tree-1 {
+            position: absolute;
+            bottom: 30%;
+            right: 15%;
+            width: 100px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        .layer-tree-2 {
+            position: absolute;
+            bottom: 33%;
+            right: 8%;
+            width: 80px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        /* Chão 1 - Fundo (ground02.png - montanha) */
+        .layer-ground-back {
+            position: absolute;
+            bottom: 35%;
+            left: 0;
+            width: 100%;
+            height: 35vh;
+            background-image: url('src/img/background/ground02.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 0;
+        }
+
+        /* Chão 2 - Meio */
+        .layer-ground-mid {
+            position: absolute;
+            bottom: 15%;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background-image: url('src/img/background/ground02.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        /* Chão 3 - Frente (ground.png) */
+        .layer-ground-front {
+            position: absolute;
+            bottom: -10%;
+            left: 0;
+            width: 100%;
+            height: 50vh;
+            background-image: url('src/img/background/ground.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 3;
+        }
+
+        /* Folhas caindo - Múltiplas folhas com posições e animações diferentes */
+        .leaf {
+            position: absolute;
+            background-image: url('src/img/background/leave.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            pointer-events: none;
+            width: 25px;
+            height: 25px;
+        }
+
+        @keyframes fallLeaf1 {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fallLeaf2 {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.5;
+            }
+
+            90% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(-360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fallLeaf3 {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================
+           INTERFACE (Header e Main)
+           ========================================= */
         header {
             background-color: white;
-            padding: 15px 30px;
+            padding: 0px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
-        .logo {
-            color: #4f91e8;
-            font-size: 28px;
-            font-weight: 800;
+        .logo img {
+            height: 67.5px;
+            /* ALTERAR de '45px' para '67.5px' */
+            width: auto;
+            /* ADICIONAR para manter proporção */
+            object-fit: contain;
+            transition: height 0.3s ease;
+            display: block;
+            /* ADICIONAR */
         }
 
         nav {
@@ -62,47 +330,73 @@
             text-transform: uppercase;
         }
 
-        .nav-btn i {
-            font-size: 18px;
+        .bg-blue {
+            background-color: #4f91e8;
         }
 
-        .bg-blue { background-color: #4f91e8; }
-        .bg-orange { background-color: #ffa45b; }
-        .bg-yellow { background-color: #ffcc14; }
-        .bg-red { background-color: #ff6b6b; }
-        .bg-green { background-color: #92b165; }
+        .bg-orange {
+            background-color: #ffa45b;
+        }
 
-        /* Círculo do usuário */
-        .user-circle {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #4f91e8, #ffa45b);
+        .bg-yellow {
+            background-color: #ffcc14;
+        }
+
+        .bg-red {
+            background-color: #ff6b6b;
+        }
+
+        .bg-green {
+            background-color: #92b165;
+        }
+
+        .user-area {
+            margin-left: 10px;
+        }
+
+        .user-badge {
+            background-color: #92b165;
+            padding: 5px 8px 5px 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-badge i {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .user-badge i:hover {
+            transform: scale(1.2);
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-left: 10px;
         }
 
-        .user-circle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .user-circle i {
-            font-size: 24px;
-        }
-
-        /* CONTEÚDO PRINCIPAL */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 30px;
+            padding-top: 50px;
+            position: relative;
+            z-index: 1;
         }
 
         .main-title {
@@ -111,17 +405,15 @@
             font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 50px;
+            text-shadow: 2px 2px 0px white, -2px -2px 0px white, 2px -2px 0px white, -2px 2px 0px white;
         }
 
-        /* BOTÕES GIGANTES (CARDS) */
         .cards-container {
             display: flex;
             gap: 30px;
             justify-content: center;
             align-items: center;
             width: 100%;
-            margin-top: auto;
-            margin-bottom: 10%;
         }
 
         .card {
@@ -135,7 +427,7 @@
             align-items: center;
             color: white;
             text-decoration: none;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1), inset 0 -5px 0 rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), inset 0 -5px 0 rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease, filter 0.2s ease;
         }
 
@@ -163,30 +455,67 @@
             opacity: 0.9;
         }
 
-        .card-orange { background-color: #ffa45b; }
-        .card-yellow { background-color: #ffcc14; }
-        .card-blue { background-color: #4f91e8; }
-        .card-green { background-color: #92b165; }
-        
+        .card-orange {
+            background-color: #ffa45b;
+        }
+
+        .card-yellow {
+            background-color: #ffcc14;
+        }
+
+        .card-blue {
+            background-color: #4f91e8;
+        }
     </style>
 </head>
+
 <body>
 
+    <div class="parallax-container">
+        <!-- Nuvens em posições diferentes -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+
+        <!-- Chão de fundo (ground02.png - montanha) -->
+        <div class="layer-ground-back" id="parallax-ground-back"></div>
+
+        <img src="src/img/background/school.png" class="layer-school" id="parallax-school" alt="Escola">
+        <img src="src/img/background/tree.png" class="layer-tree-1" id="parallax-tree1" alt="Árvore 1">
+        <img src="src/img/background/tree.png" class="layer-tree-2" id="parallax-tree2" alt="Árvore 2">
+
+        <!-- Camadas do chão -->
+        <div class="layer-ground-mid" id="parallax-ground-mid"></div>
+        <div class="layer-ground-front" id="parallax-ground-front"></div>
+    </div>
+
     <header>
-        <div class="logo">PRESS START</div>
+        <div class="logo">
+            <img src="src/img/logo.png" alt="PRESS START" id="logo-img">
+        </div>
         <nav>
             <a href="#" class="nav-btn bg-orange"><i class="fa-solid fa-gamepad"></i> Joguinho</a>
             <a href="#" class="nav-btn bg-yellow"><i class="fa-solid fa-book-open"></i> História</a>
             <a href="#" class="nav-btn bg-red"><i class="fa-solid fa-gear"></i> Configuração</a>
-            <div class="user-circle">
-                <i class="fa-solid fa-user"></i>
+
+            <div class="user-area">
+                <div class="user-badge">
+                    <i class="fas fa-sun" id="themeToggle" title="Trocar Tema"></i>
+                    <i class="fas fa-bell"></i>
+                    <span class="user-name">Amiguinho</span>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
 
     <main>
         <h1 class="main-title">Press Start: Escola Ideal</h1>
-        
+
         <div class="cards-container">
             <a href="#" class="card card-orange">
                 <i class="fa-solid fa-gamepad"></i>
@@ -208,5 +537,119 @@
         </div>
     </main>
 
+    <script>
+        // Lógica do Modo Dia/Noite
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+            } else {
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+            }
+        });
+
+        // Lógica do Efeito Parallax no Scroll
+        const school = document.getElementById('parallax-school');
+        const tree1 = document.getElementById('parallax-tree1');
+        const tree2 = document.getElementById('parallax-tree2');
+        const groundBack = document.getElementById('parallax-ground-back');
+        const groundMid = document.getElementById('parallax-ground-mid');
+        const groundFront = document.getElementById('parallax-ground-front');
+
+        window.addEventListener('scroll', () => {
+            let scrollY = window.scrollY;
+
+            school.style.transform = `translateY(${scrollY * -0.08}px)`;
+            tree1.style.transform = `translateY(${scrollY * -0.15}px)`;
+            tree2.style.transform = `translateY(${scrollY * -0.12}px)`;
+
+            // Diferentes velocidades para cada camada do chão
+            groundBack.style.transform = `translateY(${scrollY * -0.05}px)`;
+            groundMid.style.transform = `translateY(${scrollY * -0.08}px)`;
+            groundFront.style.transform = `translateY(${scrollY * -0.15}px)`;
+        });
+
+        // Aumentar tamanho da logo sem aumentar altura da topbar
+        const logoImg = document.getElementById('logo-img');
+        const headerElement = document.querySelector('header');
+
+        if (logoImg) {
+            // Garantir que a logo mantenha proporção em telas menores
+            window.addEventListener('resize', function () {
+                if (window.innerWidth <= 768) {
+                    logoImg.style.height = '50px';
+                } else {
+                    logoImg.style.height = '67.5px';
+                }
+            });
+
+            // Executar uma vez no carregamento
+            if (window.innerWidth <= 768) {
+                logoImg.style.height = '50px';
+            } else {
+                logoImg.style.height = '67.5px';
+            }
+        }
+
+        // Criar folhas caindo com posições aleatórias
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+
+            // Tamanhos variados para as folhas
+            const size = Math.random() * 20 + 15; // entre 15px e 35px
+            leaf.style.width = `${size}px`;
+            leaf.style.height = `${size}px`;
+
+            // Posição horizontal aleatória
+            leaf.style.left = `${Math.random() * 100}%`;
+
+            // Duração aleatória da animação (entre 8 e 20 segundos)
+            const duration = Math.random() * 12 + 8;
+
+            // Tipo de animação aleatória
+            const animationType = Math.floor(Math.random() * 3) + 1;
+            let animation = '';
+            if (animationType === 1) animation = 'fallLeaf1';
+            else if (animationType === 2) animation = 'fallLeaf2';
+            else animation = 'fallLeaf3';
+
+            leaf.style.animation = `${animation} ${duration}s linear infinite`;
+
+            // Delay inicial aleatório
+            leaf.style.animationDelay = `${Math.random() * -20}s`;
+
+            // Opacidade aleatória
+            leaf.style.opacity = Math.random() * 0.5 + 0.3;
+
+            return leaf;
+        }
+
+        // Adicionar folhas ao container
+        const parallaxContainer = document.querySelector('.parallax-container');
+
+        // Criar 30 folhas para um efeito mais natural
+        for (let i = 0; i < 30; i++) {
+            const leaf = createLeaf();
+            parallaxContainer.appendChild(leaf);
+        }
+
+        // Recriar folhas periodicamente para manter o número (opcional)
+        setInterval(() => {
+            const leaves = document.querySelectorAll('.leaf');
+            if (leaves.length < 25) {
+                const leaf = createLeaf();
+                parallaxContainer.appendChild(leaf);
+            }
+        }, 5000);
+    </script>
+
 </body>
+
 </html>
