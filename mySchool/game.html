@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Press Start - Escola Ideal | Jogo Mobile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* VARIÁVEIS DE TEMA */
+        :root {
+            --bg-sky: #d4f6ff;
+            --brightness-assets: 1;
+        }
+
+        body.dark-mode {
+            --bg-sky: #1a233a;
+            --brightness-assets: 0.6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Baloo 2', cursive;
+        }
+
+        body {
+            background-color: var(--bg-sky);
+            transition: background-color 0.8s ease;
+            overflow-x: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================
+           BACKGROUND PARALLAX (Camadas)
+           ========================================= */
+        .parallax-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            background-image: url('../src/img/background/cloud.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            animation: floatCloud linear infinite;
+        }
+
+        @keyframes floatCloud {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px));
+            }
+        }
+
+        .cloud-1 { top: 5%; left: -150px; width: 180px; height: 100px; animation-duration: 35s; }
+        .cloud-2 { top: 15%; left: -200px; width: 250px; height: 140px; animation-duration: 45s; animation-delay: -10s; }
+        .cloud-3 { top: 25%; left: -120px; width: 160px; height: 90px; animation-duration: 30s; animation-delay: -20s; }
+        .cloud-4 { top: 8%; left: -300px; width: 220px; height: 120px; animation-duration: 50s; animation-delay: -5s; }
+        .cloud-5 { top: 20%; left: -180px; width: 140px; height: 80px; animation-duration: 38s; animation-delay: -15s; }
+
+        .layer-school {
+            position: absolute;
+            bottom: 25%;
+            left: 2%;
+            width: 300px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        .layer-tree-1 {
+            position: absolute;
+            bottom: 25%;
+            right: 15%;
+            width: 90px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        .layer-tree-2 {
+            position: absolute;
+            bottom: 28%;
+            right: 8%;
+            width: 70px;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 1;
+        }
+
+        .layer-ground-back {
+            position: absolute;
+            bottom: 30%;
+            left: 0;
+            width: 100%;
+            height: 35vh;
+            background-image: url('../src/img/background/ground02.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 0;
+        }
+
+        .layer-ground-mid {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background-image: url('../src/img/background/ground02.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 2;
+            opacity: 0.9;
+        }
+
+        .layer-ground-front {
+            position: absolute;
+            bottom: -10%;
+            left: 0;
+            width: 100%;
+            height: 45vh;
+            background-image: url('../src/img/background/ground.png');
+            background-size: cover;
+            background-position: top center;
+            background-repeat: repeat-x;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            z-index: 3;
+        }
+
+        /* Folhas caindo */
+        .leaf {
+            position: absolute;
+            background-image: url('../src/img/background/leave.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            filter: brightness(var(--brightness-assets));
+            transition: filter 0.8s ease;
+            pointer-events: none;
+            width: 25px;
+            height: 25px;
+        }
+
+        @keyframes fallLeaf1 {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fallLeaf2 {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(100vh) rotate(-360deg); opacity: 0; }
+        }
+
+        @keyframes fallLeaf3 {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* =========================================
+           INTERFACE
+           ========================================= */
+        header {
+            background-color: white;
+            padding: 0px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            transition: height 0.3s ease;
+            display: block;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .bg-blue { background-color: #4f91e8; }
+        .bg-orange { background-color: #ffa45b; }
+        .bg-yellow { background-color: #ffcc14; }
+        .bg-red { background-color: #ff6b6b; }
+        .bg-green { background-color: #92b165; }
+
+        .user-badge {
+            background-color: #92b165;
+            padding: 5px 8px 5px 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-badge i { cursor: pointer; transition: transform 0.2s; }
+        .user-badge i:hover { transform: scale(1.2); }
+        .user-name { font-weight: 700; font-size: 14px; }
+        .user-avatar { width: 35px; height: 35px; background-color: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* =========================================
+           GAME CONTAINER - TELA CHEIA
+           ========================================= */
+        .game-fullscreen {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .game-wrapper {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            max-width: 95vw;
+            max-height: calc(100vh - 90px);
+        }
+
+        canvas {
+            border: 3px solid #2C3E50;
+            border-radius: 10px;
+            background-color: #E0F2F1;
+            cursor: pointer;
+            touch-action: none;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: calc(100% - 100px);
+            object-fit: contain;
+        }
+
+        /* Controles touch direto no jogo */
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .touch-btn {
+            background: rgba(44, 62, 80, 0.9);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            user-select: none;
+            touch-action: manipulation;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+        }
+
+        .touch-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+        }
+
+        .game-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: white;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+        }
+
+        .game-info span {
+            background: rgba(0,0,0,0.6);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* =========================================
+           ASSISTENTE
+           ========================================= */
+        .assistant-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            max-width: min(90vw, 500px);
+        }
+
+        .assistant-wrapper.is-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border: 3px solid #FF69B4;
+            border-radius: 20px 20px 20px 5px;
+            padding: clamp(10px, 3vw, 15px) clamp(12px, 4vw, 20px);
+            margin-bottom: 10px;
+            width: 100%;
+            color: #5E3A5E;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 3.5vw, 1rem);
+            box-shadow: 0 5px 0 #FFB6C1, 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            right: clamp(30px, 10vw, 60px);
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #FF69B4 transparent;
+        }
+
+        .assistant-char-img {
+            width: clamp(100px, 20vw, 160px);
+            height: auto;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .assistant-char-img:hover {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .help-emoji {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #FF69B4;
+            color: white;
+            width: clamp(50px, 12vw, 60px);
+            height: clamp(50px, 12vw, 60px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            cursor: pointer;
+            box-shadow: 0 8px 0 #FFB6C1, 0 10px 20px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            animation: wiggle 2s infinite;
+            z-index: 999;
+            touch-action: manipulation;
+        }
+
+        @keyframes wiggle {
+            0%,100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        .help-emoji:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 0 #FFB6C1;
+        }
+
+        .magic-toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #FFF0F5;
+            color: #5E3A5E;
+            padding: clamp(8px, 2.5vw, 12px) clamp(12px, 4vw, 25px);
+            border-radius: 40px;
+            font-size: clamp(0.8rem, 3.5vw, 1rem);
+            font-weight: 600;
+            box-shadow: 0 8px 0 #FFB6C1;
+            border: 2px solid white;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: min(90vw, 350px);
+            pointer-events: none;
+        }
+
+        .magic-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        body.dark-mode .speech-bubble {
+            background: #2E1B4A;
+            color: #FFE6F0;
+            border-color: #B983FF;
+        }
+
+        body.dark-mode .speech-bubble::after {
+            border-color: #B983FF transparent;
+        }
+
+        body.dark-mode .magic-toast {
+            background: #2E1B4A;
+            color: #FFE6F0;
+        }
+
+        body.dark-mode .help-emoji {
+            background: #B983FF;
+            box-shadow: 0 8px 0 #9B6BDF;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header { padding: 10px 15px; flex-direction: column; gap: 10px; }
+            .logo img { height: 45px; }
+            nav { justify-content: center; }
+            .nav-btn { padding: 6px 12px; font-size: 11px; }
+            .touch-btn { width: 55px; height: 55px; font-size: 24px; }
+            .game-fullscreen { top: 110px; }
+        }
+
+        @media (max-width: 500px) {
+            header { padding: 8px 12px; }
+            .logo img { height: 40px; }
+            .nav-btn { padding: 5px 10px; font-size: 10px; gap: 4px; }
+            .user-name { font-size: 11px; }
+            .user-avatar { width: 28px; height: 28px; }
+            .touch-btn { width: 50px; height: 50px; font-size: 22px; }
+            .game-fullscreen { top: 100px; }
+            .game-info span { font-size: 10px; padding: 3px 8px; }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .game-fullscreen { top: 70px; }
+            .game-wrapper { padding: 5px; }
+            canvas { max-height: calc(100% - 60px); }
+            .touch-btn { width: 45px; height: 45px; font-size: 20px; }
+            .game-controls { margin-top: 5px; gap: 10px; }
+            .help-emoji { width: 45px; height: 45px; font-size: 1.5rem; bottom: 10px; right: 10px; }
+            .assistant-wrapper { bottom: 60px; right: 10px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="parallax-container">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="layer-ground-back" id="parallax-ground-back"></div>
+        <img src="../src/img/background/school.png" class="layer-school" id="parallax-school" alt="Escola">
+        <img src="../src/img/background/tree.png" class="layer-tree-1" id="parallax-tree1" alt="Árvore 1">
+        <img src="../src/img/background/tree.png" class="layer-tree-2" id="parallax-tree2" alt="Árvore 2">
+        <div class="layer-ground-mid" id="parallax-ground-mid"></div>
+        <div class="layer-ground-front" id="parallax-ground-front"></div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <img src="../src/img/logo.png" alt="PRESS START" id="logo-img">
+        </div>
+        <nav>
+            <a href="#" class="nav-btn bg-orange"><i class="fa-solid fa-gamepad"></i> Joguinho</a>
+            <a href="#" class="nav-btn bg-yellow"><i class="fa-solid fa-book-open"></i> História</a>
+            <a href="#" class="nav-btn bg-red"><i class="fa-solid fa-gear"></i> Configuração</a>
+            <div class="user-badge">
+                <i class="fas fa-sun" id="themeToggle"></i>
+                <i class="fas fa-bell"></i>
+                <span class="user-name">Amiguinho</span>
+                <div class="user-avatar"><i class="fas fa-user"></i></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- JOGO EM TELA CHEIA -->
+    <div class="game-fullscreen">
+        <div class="game-wrapper">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <div class="game-controls">
+                <div class="touch-btn" data-direction="left">⬅️</div>
+                <div class="touch-btn" data-direction="up">⬆️</div>
+                <div class="touch-btn" data-direction="down">⬇️</div>
+                <div class="touch-btn" data-direction="right">➡️</div>
+            </div>
+            
+            <div class="game-info">
+                <span>🎮 Toque nos botões ou no chão</span>
+                <span id="posDisplay">📍 400, 300</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASSISTENTE -->
+    <div class="help-emoji" id="helpEmojiBtn">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div id="magicToast" class="magic-toast">
+        <i class="fas fa-magic"></i>
+        <span id="toastMessage">✨ Mensagem mágica!</span>
+    </div>
+
+    <div class="assistant-wrapper" id="assistantContainer">
+        <div class="speech-bubble" id="bubbleText">
+            🎮 Olá! Use os botões ou toque no chão para mover o personagem!
+        </div>
+        <img src="src/img/Assistente00.png" alt="Assistente" class="assistant-char-img" id="assistantImage"
+            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23FFD700\'/%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Cpath d=\'M30 65 Q50 80,70 65\' stroke=\'black\' stroke-width=\'5\' fill=\'none\'/%3E%3C/svg%3E'">
+    </div>
+
+    <script>
+        // ==================== JOGO ====================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const posDisplay = document.getElementById('posDisplay');
+
+        const SPEED = 4;
+
+        const player = {
+            x: 400, y: 300, width: 64, height: 64,
+            direction: 'static', frame: 0, lastFrameUpdate: 0,
+            targetX: null, targetY: null,
+            sprites: {}
+        };
+
+        const spriteNames = ['static00', 'left00', 'left01', 'up00', 'up01', 'down00', 'down01'];
+        const placeholderColors = {
+            'static00': '#4CAF50', 'left00': '#FF9800', 'left01': '#FF9800',
+            'up00': '#2196F3', 'up01': '#2196F3', 'down00': '#9C27B0', 'down01': '#9C27B0'
+        };
+
+        function createPlaceholderSprite(color) {
+            const c = document.createElement('canvas');
+            c.width = 64; c.height = 64;
+            const ct = c.getContext('2d');
+            ct.fillStyle = color;
+            ct.fillRect(0, 0, 64, 64);
+            ct.fillStyle = '#FFFFFF';
+            ct.font = 'bold 32px Arial';
+            ct.fillText('👤', 18, 48);
+            ct.strokeStyle = '#000';
+            ct.strokeRect(0, 0, 64, 64);
+            return c;
+        }
+
+        let loadedImages = 0;
+        spriteNames.forEach(name => {
+            const img = new Image();
+            img.onload = () => { player.sprites[name] = img; loadedImages++; if(loadedImages === spriteNames.length) startGame(); };
+            img.onerror = () => { player.sprites[name] = createPlaceholderSprite(placeholderColors[name] || '#CCC'); loadedImages++; if(loadedImages === spriteNames.length) startGame(); };
+            img.src = `./src/img/boy/${name}.png`;
+        });
+
+        // Controles
+        let touchDirections = { up: false, down: false, left: false, right: false };
+        let keys = {};
+
+        window.addEventListener('keydown', e => {
+            keys[e.key] = true;
+            if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d'].includes(e.key)) e.preventDefault();
+        });
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        document.querySelectorAll('.touch-btn').forEach(btn => {
+            const dir = btn.getAttribute('data-direction');
+            const start = (e) => { e.preventDefault(); touchDirections[dir] = true; btn.style.transform = 'scale(0.95)'; };
+            const end = (e) => { e.preventDefault(); touchDirections[dir] = false; btn.style.transform = 'scale(1)'; };
+            btn.addEventListener('touchstart', start);
+            btn.addEventListener('touchend', end);
+            btn.addEventListener('touchcancel', end);
+            btn.addEventListener('mousedown', start);
+            btn.addEventListener('mouseup', end);
+            btn.addEventListener('mouseleave', end);
+        });
+
+        // Teleporte ao tocar no canvas
+        function handleCanvasTap(e) {
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            let clientX, clientY;
+            if (e.touches) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+            else { clientX = e.clientX; clientY = e.clientY; }
+            
+            let canvasX = (clientX - rect.left) * scaleX - player.width/2;
+            let canvasY = (clientY - rect.top) * scaleY - player.height/2;
+            player.targetX = Math.max(0, Math.min(canvas.width - player.width, canvasX));
+            player.targetY = Math.max(0, Math.min(canvas.height - player.height, canvasY));
+            
+            // Efeito visual
+            const fx = document.createElement('div');
+            fx.style.position = 'fixed';
+            fx.style.left = `${clientX - 20}px`;
+            fx.style.top = `${clientY - 20}px`;
+            fx.style.width = '40px';
+            fx.style.height = '40px';
+            fx.style.borderRadius = '50%';
+            fx.style.backgroundColor = 'rgba(255,255,255,0.6)';
+            fx.style.pointerEvents = 'none';
+            fx.style.transition = 'all 0.2s ease';
+            document.body.appendChild(fx);
+            setTimeout(() => { fx.style.transform = 'scale(2)'; fx.style.opacity = '0'; setTimeout(() => fx.remove(), 200); }, 10);
+        }
+        canvas.addEventListener('touchstart', handleCanvasTap);
+        canvas.addEventListener('mousedown', handleCanvasTap);
+
+        function moveToTarget() {
+            if (player.targetX !== null && player.targetY !== null) {
+                const dx = player.targetX - player.x;
+                const dy = player.targetY - player.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < SPEED) {
+                    player.x = player.targetX;
+                    player.y = player.targetY;
+                    player.targetX = null;
+                    player.targetY = null;
+                } else {
+                    const angle = Math.atan2(dy, dx);
+                    player.x += Math.cos(angle) * SPEED;
+                    player.y += Math.sin(angle) * SPEED;
+                    if (Math.abs(dx) > Math.abs(dy)) player.direction = dx > 0 ? 'right' : 'left';
+                    else player.direction = dy > 0 ? 'down' : 'up';
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function update() {
+            let moving = false;
+            if (!moveToTarget()) {
+                let moveX = 0, moveY = 0;
+                if (keys['ArrowLeft'] || keys['a'] || touchDirections.left) moveX = -SPEED;
+                if (keys['ArrowRight'] || keys['d'] || touchDirections.right) moveX = SPEED;
+                if (keys['ArrowUp'] || keys['w'] || touchDirections.up) moveY = -SPEED;
+                if (keys['ArrowDown'] || keys['s'] || touchDirections.down) moveY = SPEED;
+                
+                if (moveX !== 0 || moveY !== 0) {
+                    player.x += moveX;
+                    player.y += moveY;
+                    moving = true;
+                    if (moveX !== 0) player.direction = moveX > 0 ? 'right' : 'left';
+                    else if (moveY !== 0) player.direction = moveY > 0 ? 'down' : 'up';
+                } else player.direction = 'static';
+            } else moving = true;
+            
+            player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+            player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+            
+            const now = Date.now();
+            if (now - player.lastFrameUpdate > 1000/6) {
+                if (moving) player.frame = player.frame === 0 ? 1 : 0;
+                else player.frame = 0;
+                player.lastFrameUpdate = now;
+            }
+            
+            posDisplay.innerHTML = `📍 ${Math.floor(player.x)}, ${Math.floor(player.y)}`;
+        }
+
+        function draw() {
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            grad.addColorStop(0, '#E0F2F1');
+            grad.addColorStop(1, '#B2DFDB');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#80CBC4';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < canvas.width; i += 40) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+            
+            let currentSprite;
+            let flip = false;
+            switch(player.direction) {
+                case 'left': currentSprite = player.sprites[`left0${player.frame}`]; break;
+                case 'right': currentSprite = player.sprites[`left0${player.frame}`]; flip = true; break;
+                case 'up': currentSprite = player.sprites[`up0${player.frame}`]; break;
+                case 'down': currentSprite = player.sprites[`down0${player.frame}`]; break;
+                default: currentSprite = player.sprites['static00'];
+            }
+            
+            if (currentSprite) {
+                ctx.save();
+                if (flip) { ctx.translate(player.x + player.width, player.y); ctx.scale(-1, 1); ctx.drawImage(currentSprite, 0, 0, player.width, player.height); }
+                else { ctx.drawImage(currentSprite, player.x, player.y, player.width, player.height); }
+                ctx.restore();
+            }
+            
+            ctx.fillStyle = '#2C3E50';
+            ctx.font = 'bold 16px "Comic Sans MS", cursive';
+            ctx.fillText("🎮 Explore a Escola Ideal", 15, 30);
+            ctx.font = '12px Arial';
+            ctx.fillStyle = '#78909C';
+            ctx.fillText("✨ Toque no chão para teleportar!", canvas.width - 170, canvas.height - 15);
+        }
+
+        let animId = null;
+        function gameLoop() { update(); draw(); animId = requestAnimationFrame(gameLoop); }
+        function startGame() { if(animId) cancelAnimationFrame(animId); gameLoop(); }
+
+        // ==================== ASSISTENTE ====================
+        let isAssistantVisible = false;
+        const assistantContainer = document.getElementById('assistantContainer');
+        const helpBtn = document.getElementById('helpEmojiBtn');
+        const bubbleText = document.getElementById('bubbleText');
+        const toast = document.getElementById('magicToast');
+        const toastMsg = document.getElementById('toastMessage');
+
+        function showToast(message, duration = 3000) {
+            toastMsg.innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), duration);
+        }
+
+        function toggleAssistant() {
+            isAssistantVisible = !isAssistantVisible;
+            if (isAssistantVisible) {
+                assistantContainer.classList.add('is-visible');
+                helpBtn.style.opacity = '0';
+                helpBtn.style.visibility = 'hidden';
+                const messages = [
+                    "🎮 Use os botões ou toque no chão para se teleportar!",
+                    "📚 Explore a Escola Ideal, cada canto tem uma surpresa!",
+                    "⭐ Quanto mais você explorar, mais prêmios vai ganhar!",
+                    "🏆 Complete missões especiais desbloqueando conquistas!",
+                    "💡 Dica: Toque duas vezes rápido para uma surpresa!"
+                ];
+                bubbleText.innerText = messages[Math.floor(Math.random() * messages.length)];
+                showToast("✨ Assistente ativado! ✨", 2000);
+            } else {
+                assistantContainer.classList.remove('is-visible');
+                helpBtn.style.opacity = '1';
+                helpBtn.style.visibility = 'visible';
+                showToast("👋 Até logo! Clique no robô para me chamar", 2000);
+            }
+        }
+
+        helpBtn.addEventListener('click', toggleAssistant);
+        document.getElementById('assistantImage').addEventListener('click', () => {
+            const messages = [
+                "🎮 Continue explorando!",
+                "📖 Você está indo muito bem!",
+                "🏆 Já visitou todos os cantos?",
+                "✨ Parabéns, continue assim!",
+                "🎯 Missão: Explorar a Escola Ideal!"
+            ];
+            bubbleText.innerText = messages[Math.floor(Math.random() * messages.length)];
+            showToast("💬 " + bubbleText.innerText, 2500);
+        });
+
+        // ==================== TEMA E PARALLAX ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            themeToggle.classList.toggle('fa-sun');
+            themeToggle.classList.toggle('fa-moon');
+            showToast(body.classList.contains('dark-mode') ? "🌙 Modo Noturno ativado!" : "☀️ Modo Diurno ativado!");
+        });
+
+        // Scroll parallax (só para desktop, em mobile não tem scroll)
+        const school = document.getElementById('parallax-school');
+        const tree1 = document.getElementById('parallax-tree1');
+        const tree2 = document.getElementById('parallax-tree2');
+        const groundBack = document.getElementById('parallax-ground-back');
+        const groundMid = document.getElementById('parallax-ground-mid');
+        const groundFront = document.getElementById('parallax-ground-front');
+        
+        window.addEventListener('scroll', () => {
+            let scrollY = window.scrollY;
+            if (school) school.style.transform = `translateY(${scrollY * -0.05}px)`;
+            if (tree1) tree1.style.transform = `translateY(${scrollY * -0.1}px)`;
+            if (tree2) tree2.style.transform = `translateY(${scrollY * -0.08}px)`;
+            if (groundBack) groundBack.style.transform = `translateY(${scrollY * -0.03}px)`;
+            if (groundMid) groundMid.style.transform = `translateY(${scrollY * -0.06}px)`;
+            if (groundFront) groundFront.style.transform = `translateY(${scrollY * -0.12}px)`;
+        });
+
+        function createLeaf() {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf');
+            const size = Math.random() * 20 + 15;
+            leaf.style.width = `${size}px`;
+            leaf.style.height = `${size}px`;
+            leaf.style.left = `${Math.random() * 100}%`;
+            const duration = Math.random() * 12 + 8;
+            const type = Math.floor(Math.random() * 3) + 1;
+            leaf.style.animation = `fallLeaf${type} ${duration}s linear infinite`;
+            leaf.style.animationDelay = `${Math.random() * -20}s`;
+            leaf.style.opacity = Math.random() * 0.5 + 0.3;
+            return leaf;
+        }
+
+        const parallaxContainer = document.querySelector('.parallax-container');
+        for (let i = 0; i < 25; i++) parallaxContainer.appendChild(createLeaf());
+        
+        setInterval(() => {
+            if (document.querySelectorAll('.leaf').length < 20) parallaxContainer.appendChild(createLeaf());
+        }, 6000);
+
+        // Logo responsivo
+        const logoImg = document.getElementById('logo-img');
+        function updateLogo() {
+            if (window.innerWidth <= 500) logoImg.src = 'src/img/logo02.png';
+            else logoImg.src = '../src/img/logo.png';
+        }
+        window.addEventListener('resize', updateLogo);
+        updateLogo();
+
+        // Início do jogo com delay para carregamento
+        if (loadedImages === spriteNames.length) startGame();
+        setTimeout(() => { if(!animId) startGame(); }, 2000);
+        
+        showToast("🎮 Bem-vindo ao Press Start! Toque no robô para ajuda", 4000);
+        
+        console.log('%c🎮 Press Start - Escola Ideal | Modo Fullscreen + Assistente 🎮', 'color: #FF69B4; font-size: 16px; font-weight: bold;');
+    </script>
+
+</body>
+
+</html>
