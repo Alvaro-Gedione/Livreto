@@ -15,12 +15,16 @@
         :root {
             --bg-sky: #d4f6ff;
             --brightness-assets: 1;
+            --sun-opacity: 1;
+            --moon-opacity: 0;
         }
 
         /* MODO ESCURO (Noite) */
         body.dark-mode {
             --bg-sky: #1a233a;
             --brightness-assets: 0.6;
+            --sun-opacity: 0;
+            --moon-opacity: 1;
         }
 
         * {
@@ -52,6 +56,131 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+        }
+
+        /* SOL E LUA */
+        .sun, .moon {
+            position: absolute;
+            top: 25%;
+            left: 8%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            z-index: 25;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .sun {
+            background: radial-gradient(circle at 30% 30%, #ffeb3b, #ff9800);
+            opacity: var(--sun-opacity);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+
+        .moon {
+            background: radial-gradient(circle at 30% 30%, #e0e0e0, #9e9e9e);
+            opacity: var(--moon-opacity);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Crateras da lua */
+        .moon::before,
+        .moon::after {
+            content: '';
+            position: absolute;
+            background: rgba(160, 160, 160, 0.5);
+            border-radius: 50%;
+        }
+
+        .moon::before {
+            width: 15px;
+            height: 15px;
+            top: 20px;
+            left: 15px;
+        }
+
+        .moon::after {
+            width: 10px;
+            height: 10px;
+            top: 45px;
+            left: 50px;
+        }
+
+        /* Raios do sol */
+        .sun::before,
+        .sun::after {
+            content: '';
+            position: absolute;
+            background: radial-gradient(circle, #ffeb3b, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .sun::before {
+            width: 120px;
+            height: 120px;
+            top: -20px;
+            left: -20px;
+            opacity: 0.3;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .sun::after {
+            width: 160px;
+            height: 160px;
+            top: -40px;
+            left: -40px;
+            opacity: 0.15;
+            animation: pulse 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+        }
+
+        /* Estrelas para o modo noturno */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        body.dark-mode .star {
+            opacity: var(--star-opacity, 0.8);
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
 
         /* Nuvens animadas - Múltiplas nuvens com posições diferentes */
@@ -284,7 +413,7 @@
            INTERFACE (Header e Main)
            ========================================= */
         header {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.39);
             padding: 0px 30px;
             display: flex;
             justify-content: space-between;
@@ -624,7 +753,7 @@
             animation: confettiFall 3s linear infinite;
             pointer-events: none;
             border-radius: 50% 50% 0 50%;
-            z-index: 10000;
+            z-index: 20;
         }
 
         @keyframes confettiFall {
@@ -720,6 +849,13 @@
 
             .card-title {
                 font-size: 22px;
+            }
+            
+            .sun, .moon {
+                width: 60px;
+                height: 60px;
+                top: 5%;
+                right: 5%;
             }
         }
 
@@ -825,6 +961,13 @@
 
             .assistant-wrapper {
                 max-width: 280px;
+            }
+            
+            .sun, .moon {
+                width: 50px;
+                height: 50px;
+                top: 10%;
+                right: 5%;
             }
         }
 
@@ -972,6 +1115,13 @@
                 padding: 10px 15px;
                 max-width: 90%;
             }
+            
+            .sun, .moon {
+                width: 40px;
+                height: 40px;
+                top: 12%;
+                right: 5%;
+            }
         }
 
         /* Ajuste para telas muito grandes */
@@ -1004,6 +1154,11 @@
             .main-title {
                 font-size: 38px;
             }
+            
+            .sun, .moon {
+                width: 100px;
+                height: 100px;
+            }
         }
 
         /* ORIENTAÇÃO PAISAGEM EM MOBILE */
@@ -1025,6 +1180,13 @@
                 padding: 8px 12px;
                 font-size: 0.8rem;
             }
+            
+            .sun, .moon {
+                width: 35px;
+                height: 35px;
+                top: 5%;
+                right: 5%;
+            }
         }
     </style>
 </head>
@@ -1032,6 +1194,13 @@
 <body>
 
     <div class="parallax-container">
+        <!-- SOL E LUA -->
+        <div class="sun" id="sunIcon" title="Clique para alternar para noite 🌙"></div>
+        <div class="moon" id="moonIcon" title="Clique para alternar para dia ☀️"></div>
+        
+        <!-- Estrelas geradas via JavaScript -->
+        <div id="starsContainer"></div>
+
         <!-- Nuvens em posições diferentes -->
         <div class="cloud cloud-1"></div>
         <div class="cloud cloud-2"></div>
@@ -1126,22 +1295,92 @@
     <script src="./src/assistent.js"></script>
 
     <script>
-        // Lógica do Modo Dia/Noite
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        themeToggle.addEventListener('click', () => {
+        // Função para gerar estrelas no céu
+        function generateStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            if (!starsContainer) return;
+            
+            starsContainer.innerHTML = '';
+            const numberOfStars = 100;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 60 + '%';
+                star.style.setProperty('--star-opacity', Math.random() * 0.5 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Função para alternar tema
+        function toggleTheme() {
             body.classList.toggle('dark-mode');
-
+            
             if (body.classList.contains('dark-mode')) {
                 themeToggle.classList.remove('fa-sun');
                 themeToggle.classList.add('fa-moon');
+                showToastMessage('🌙 Boa noite! A lua está linda hoje! ✨');
             } else {
                 themeToggle.classList.remove('fa-moon');
                 themeToggle.classList.add('fa-sun');
+                showToastMessage('☀️ Bom dia! O sol está radiante! 🌈');
             }
-        });
-
+        }
+        
+        // Função para mostrar toast
+        function showToastMessage(message) {
+            const toast = document.getElementById('magicToast');
+            const toastMessage = document.getElementById('toastMessage');
+            if (toast && toastMessage) {
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+        
+        // Lógica do Modo Dia/Noite
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const body = document.body;
+        
+        // Evento de clique no Sol
+        if (sunIcon) {
+            sunIcon.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    toggleTheme();
+                } else {
+                    showToastMessage('☀️ Já estamos durante o dia! Clique na lua para virar noite 🌙');
+                }
+            });
+        }
+        
+        // Evento de clique na Lua
+        if (moonIcon) {
+            moonIcon.addEventListener('click', () => {
+                if (!body.classList.contains('dark-mode')) {
+                    toggleTheme();
+                } else {
+                    showToastMessage('🌙 Já é noite! Clique no sol para amanhecer ☀️');
+                }
+            });
+        }
+        
+        // Evento do botão de tema no header
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+        
+        // Gerar estrelas ao carregar
+        generateStars();
+        
         // Lógica do Efeito Parallax no Scroll
         const school = document.getElementById('parallax-school');
         const tree1 = document.getElementById('parallax-tree1');
@@ -1149,24 +1388,25 @@
         const groundBack = document.getElementById('parallax-ground-back');
         const groundMid = document.getElementById('parallax-ground-mid');
         const groundFront = document.getElementById('parallax-ground-front');
-
-        window.addEventListener('scroll', () => {
-            let scrollY = window.scrollY;
-
-            school.style.transform = `translateY(${scrollY * -0.08}px)`;
-            tree1.style.transform = `translateY(${scrollY * -0.15}px)`;
-            tree2.style.transform = `translateY(${scrollY * -0.12}px)`;
-
-            // Diferentes velocidades para cada camada do chão
-            groundBack.style.transform = `translateY(${scrollY * -0.05}px)`;
-            groundMid.style.transform = `translateY(${scrollY * -0.08}px)`;
-            groundFront.style.transform = `translateY(${scrollY * -0.15}px)`;
-        });
-
+        
+        if (school && tree1 && tree2 && groundBack && groundMid && groundFront) {
+            window.addEventListener('scroll', () => {
+                let scrollY = window.scrollY;
+                
+                school.style.transform = `translateY(${scrollY * -0.08}px)`;
+                tree1.style.transform = `translateY(${scrollY * -0.15}px)`;
+                tree2.style.transform = `translateY(${scrollY * -0.12}px)`;
+                
+                // Diferentes velocidades para cada camada do chão
+                groundBack.style.transform = `translateY(${scrollY * -0.05}px)`;
+                groundMid.style.transform = `translateY(${scrollY * -0.08}px)`;
+                groundFront.style.transform = `translateY(${scrollY * -0.15}px)`;
+            });
+        }
+        
         // Trocar Logo e ajustar tamanho baseando na largura da tela
         const logoImg = document.getElementById('logo-img');
-        const headerElement = document.querySelector('header');
-
+        
         if (logoImg) {
             function updateLogoResponsive() {
                 if (window.innerWidth <= 500) {
@@ -1180,16 +1420,16 @@
                     logoImg.src = 'src/img/logo.png';
                 }
             }
-
+            
             window.addEventListener('resize', updateLogoResponsive);
             updateLogoResponsive();
         }
-
+        
         // Criar folhas caindo com posições aleatórias
         function createLeaf() {
             const leaf = document.createElement('div');
             leaf.classList.add('leaf');
-
+            
             const size = Math.random() * 20 + 15;
             leaf.style.width = `${size}px`;
             leaf.style.height = `${size}px`;
@@ -1205,38 +1445,42 @@
             leaf.style.opacity = Math.random() * 0.5 + 0.3;
             return leaf;
         }
-
+        
         const parallaxContainer = document.querySelector('.parallax-container');
-        for (let i = 0; i < 30; i++) {
-            const leaf = createLeaf();
-            parallaxContainer.appendChild(leaf);
-        }
-
-        setInterval(() => {
-            const leaves = document.querySelectorAll('.leaf');
-            if (leaves.length < 25) {
+        if (parallaxContainer) {
+            for (let i = 0; i < 30; i++) {
                 const leaf = createLeaf();
                 parallaxContainer.appendChild(leaf);
             }
-        }, 5000);
-
+            
+            setInterval(() => {
+                const leaves = document.querySelectorAll('.leaf');
+                if (leaves.length < 25) {
+                    const leaf = createLeaf();
+                    parallaxContainer.appendChild(leaf);
+                }
+            }, 5000);
+        }
+        
         // Inicialização extra para garantir que o assistente funcione
-        // Aguarda o DOM carregar completamente
         document.addEventListener('DOMContentLoaded', function() {
-            // Pequeno delay para garantir que os scripts foram carregados
             setTimeout(() => {
                 if (typeof window.showToast === 'function') {
                     window.showToast('🌈 Bem-vindo ao Press Start!');
+                } else {
+                    showToastMessage('🌈 Bem-vindo ao Press Start!');
                 }
             }, 1500);
             
             setTimeout(() => {
                 if (typeof window.showToast === 'function') {
                     window.showToast('🎮 Clique no robô para conversar com a Prof!');
+                } else {
+                    showToastMessage('🎮 Clique no robô para conversar com a Prof!');
                 }
             }, 4000);
         });
-
+        
         // Efeito de confetti para os cards
         function createConfetti() {
             const confetti = document.createElement('div');
@@ -1252,7 +1496,7 @@
                 confetti.remove();
             }, 5000);
         }
-
+        
         // Adicionar evento de clique nos cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', (e) => {
@@ -1262,22 +1506,27 @@
                 }
                 if (typeof window.showToast === 'function') {
                     window.showToast('🎉 Boa escolha! Vamos explorar!');
+                } else {
+                    showToastMessage('🎉 Boa escolha! Vamos explorar!');
                 }
                 setTimeout(() => {
                     window.location.href = card.getAttribute('href');
                 }, 500);
             });
         });
-
+        
         // Corrigir o clique no user-badge
         document.querySelector('.user-badge')?.addEventListener('click', function() {
             if (typeof window.showToast === 'function') {
                 window.showToast('✨ Olá, amiguinho! ✨');
+            } else {
+                showToastMessage('✨ Olá, amiguinho! ✨');
             }
         });
-
+        
+        // Exportar showToast para uso global
+        window.showToast = showToastMessage;
     </script>
-
 </body>
 
 </html>

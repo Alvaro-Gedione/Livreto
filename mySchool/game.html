@@ -17,6 +17,117 @@
             --brightness-assets: 1;
         }
 
+        /* =========================================
+   TELA DE START
+   ========================================= */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease;
+        }
+
+        .start-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .start-container {
+            text-align: center;
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            70% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .start-logo {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .start-title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .start-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            padding: 18px 48px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .start-btn:active {
+            transform: translateY(1px);
+        }
+
+        .press-start-text {
+            font-family: monospace;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 30px;
+            letter-spacing: 3px;
+        }
+
         body.dark-mode {
             --bg-sky: #1a233a;
             --brightness-assets: 0.6;
@@ -71,16 +182,55 @@
             0% {
                 transform: translateX(-100px);
             }
+
             100% {
                 transform: translateX(calc(100vw + 100px));
             }
         }
 
-        .cloud-1 { top: 5%; left: -150px; width: 180px; height: 100px; animation-duration: 35s; }
-        .cloud-2 { top: 15%; left: -200px; width: 250px; height: 140px; animation-duration: 45s; animation-delay: -10s; }
-        .cloud-3 { top: 25%; left: -120px; width: 160px; height: 90px; animation-duration: 30s; animation-delay: -20s; }
-        .cloud-4 { top: 8%; left: -300px; width: 220px; height: 120px; animation-duration: 50s; animation-delay: -5s; }
-        .cloud-5 { top: 20%; left: -180px; width: 140px; height: 80px; animation-duration: 38s; animation-delay: -15s; }
+        .cloud-1 {
+            top: 5%;
+            left: -150px;
+            width: 180px;
+            height: 100px;
+            animation-duration: 35s;
+        }
+
+        .cloud-2 {
+            top: 15%;
+            left: -200px;
+            width: 250px;
+            height: 140px;
+            animation-duration: 45s;
+            animation-delay: -10s;
+        }
+
+        .cloud-3 {
+            top: 25%;
+            left: -120px;
+            width: 160px;
+            height: 90px;
+            animation-duration: 30s;
+            animation-delay: -20s;
+        }
+
+        .cloud-4 {
+            top: 8%;
+            left: -300px;
+            width: 220px;
+            height: 120px;
+            animation-duration: 50s;
+            animation-delay: -5s;
+        }
+
+        .cloud-5 {
+            top: 20%;
+            left: -180px;
+            width: 140px;
+            height: 80px;
+            animation-duration: 38s;
+            animation-delay: -15s;
+        }
 
         .layer-school {
             position: absolute;
@@ -173,31 +323,70 @@
         }
 
         @keyframes fallLeaf1 {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         @keyframes fallLeaf2 {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(100vh) rotate(-360deg); opacity: 0; }
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.5;
+            }
+
+            90% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(-360deg);
+                opacity: 0;
+            }
         }
 
         @keyframes fallLeaf3 {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
         }
 
         /* =========================================
            INTERFACE
            ========================================= */
         header {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.39);
             padding: 0px 30px;
             display: flex;
             justify-content: space-between;
@@ -239,11 +428,25 @@
             text-transform: uppercase;
         }
 
-        .bg-blue { background-color: #4f91e8; }
-        .bg-orange { background-color: #ffa45b; }
-        .bg-yellow { background-color: #ffcc14; }
-        .bg-red { background-color: #ff6b6b; }
-        .bg-green { background-color: #92b165; }
+        .bg-blue {
+            background-color: #4f91e8;
+        }
+
+        .bg-orange {
+            background-color: #ffa45b;
+        }
+
+        .bg-yellow {
+            background-color: #ffcc14;
+        }
+
+        .bg-red {
+            background-color: #ff6b6b;
+        }
+
+        .bg-green {
+            background-color: #92b165;
+        }
 
         .user-badge {
             background-color: #92b165;
@@ -256,10 +459,340 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .user-badge i { cursor: pointer; transition: transform 0.2s; }
-        .user-badge i:hover { transform: scale(1.2); }
-        .user-name { font-weight: 700; font-size: 14px; }
-        .user-avatar { width: 35px; height: 35px; background-color: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .user-badge i {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .user-badge i:hover {
+            transform: scale(1.2);
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =========================================
+           CARROSSEL 3D (TELA INICIAL)
+           ========================================= */
+        .carousel-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+
+        .carousel-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .carousel-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 48px;
+            padding: 40px 35px;
+            max-width: 90%;
+            width: 800px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(46, 196, 182, 0.2);
+            animation: slideInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        body.dark-mode .carousel-container {
+            background: rgba(30, 30, 50, 0.95);
+            color: white;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(60px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .carousel-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2EC4B6 0%, #018B8B 50%, #8E7AB5 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .carousel-title i {
+            background: linear-gradient(135deg, #2EC4B6, #8E7AB5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+        }
+
+        .carousel-sub {
+            color: #6B7280;
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Área principal do carrossel 3D */
+        .carousel-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: nowrap;
+        }
+
+        .carousel-arrow {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #2EC4B6;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .carousel-arrow:hover {
+            transform: scale(1.08);
+            background: linear-gradient(135deg, #2EC4B6 0%, #018B8B 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(46, 196, 182, 0.3);
+        }
+
+        .carousel-arrow:active {
+            transform: scale(0.95);
+        }
+
+        /* ESTRUTURA 3D */
+        .carousel-scene {
+            perspective: 1000px;
+            width: 250px;
+            height: 290px;
+            position: relative;
+            margin: 0 20px;
+        }
+
+        .carousel-3d-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Card do personagem 3D */
+        .carousel-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 32px;
+            padding: 30px 25px;
+            width: 250px;
+            height: 290px;
+            text-align: center;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(46, 196, 182, 0.15);
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            backface-visibility: visible;
+        }
+
+        body.dark-mode .carousel-card {
+            background: linear-gradient(145deg, #2a2a3a 0%, #1f1f2e 100%);
+        }
+
+        .carousel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(46, 196, 182, 0.08), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .carousel-card:hover::before {
+            left: 100%;
+        }
+
+        /* Moldura da imagem */
+        .carousel-img-wrapper {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #c7f9f4 100%);
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 12px 25px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-card:hover .carousel-img-wrapper {
+            transform: scale(1.02);
+        }
+
+        .carousel-character-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fef9e6, #fff5e6);
+            padding: 12px;
+        }
+
+        .carousel-name {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.35rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 12px;
+        }
+
+        body.dark-mode .carousel-name {
+            background: linear-gradient(135deg, #e0e0e0 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        /* Indicadores estilizados */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #cbd5e0, #e2e8f0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            width: 28px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #2EC4B6 0%, #018B8B 100%);
+            box-shadow: 0 2px 8px rgba(46, 196, 182, 0.4);
+        }
+
+        .start-game-btn {
+            background: linear-gradient(135deg, #2EC4B6 0%, #018B8B 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 18px rgba(46, 196, 182, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 auto;
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(46, 196, 182, 0.45);
+        }
+
+        .start-game-btn:active {
+            transform: translateY(1px);
+        }
+
+        .reset-selection {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: #4B5563;
+            border: 1px solid #e2e8f0;
+            padding: 12px 28px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .reset-selection:hover {
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            transform: translateY(-2px);
+        }
+
+        /* ANIMAÇÃO DO BOTÃO START */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 6px 18px rgba(46, 196, 182, 0.35);
+            }
+
+            50% {
+                box-shadow: 0 6px 25px rgba(46, 196, 182, 0.6);
+            }
+        }
+
+        .start-game-btn {
+            animation: pulse 2s infinite;
+        }
+
+        .start-game-btn:hover {
+            animation: none;
+        }
 
         /* =========================================
            GAME CONTAINER - TELA CHEIA
@@ -281,7 +814,7 @@
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             padding: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -304,7 +837,6 @@
             object-fit: contain;
         }
 
-        /* Controles touch direto no jogo */
         .game-controls {
             display: flex;
             justify-content: center;
@@ -328,12 +860,12 @@
             transition: all 0.1s ease;
             user-select: none;
             touch-action: manipulation;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
         }
 
         .touch-btn:active {
             transform: scale(0.95);
-            box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
         }
 
         .game-info {
@@ -342,18 +874,16 @@
             margin-top: 10px;
             font-size: 12px;
             color: white;
-            text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
         }
 
         .game-info span {
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             padding: 5px 12px;
             border-radius: 20px;
         }
 
-        /* =========================================
-           ASSISTENTE
-           ========================================= */
+        /* ASSISTENTE, TOAST... */
         .assistant-wrapper {
             position: fixed;
             bottom: 20px;
@@ -406,10 +936,6 @@
             cursor: pointer;
         }
 
-        .assistant-char-img:hover {
-            transform: scale(1.05) rotate(3deg);
-        }
-
         .help-emoji {
             position: fixed;
             bottom: 20px;
@@ -433,14 +959,19 @@
         }
 
         @keyframes wiggle {
-            0%,100% { transform: rotate(0deg); }
-            25% { transform: rotate(10deg); }
-            75% { transform: rotate(-10deg); }
-        }
 
-        .help-emoji:active {
-            transform: scale(0.95);
-            box-shadow: 0 4px 0 #FFB6C1;
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(10deg);
+            }
+
+            75% {
+                transform: rotate(-10deg);
+            }
         }
 
         .magic-toast {
@@ -471,73 +1002,234 @@
             opacity: 1;
         }
 
-        body.dark-mode .speech-bubble {
-            background: #2E1B4A;
-            color: #FFE6F0;
-            border-color: #B983FF;
-        }
-
-        body.dark-mode .speech-bubble::after {
-            border-color: #B983FF transparent;
-        }
-
-        body.dark-mode .magic-toast {
-            background: #2E1B4A;
-            color: #FFE6F0;
-        }
-
-        body.dark-mode .help-emoji {
-            background: #B983FF;
-            box-shadow: 0 8px 0 #9B6BDF;
-        }
-
-        /* Responsividade */
         @media (max-width: 768px) {
-            header { padding: 10px 15px; flex-direction: column; gap: 10px; }
-            .logo img { height: 45px; }
-            nav { justify-content: center; }
-            .nav-btn { padding: 6px 12px; font-size: 11px; }
-            .touch-btn { width: 55px; height: 55px; font-size: 24px; }
-            .game-fullscreen { top: 110px; }
+            header {
+                padding: 10px 15px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo img {
+                height: 45px;
+            }
+
+            .carousel-container {
+                padding: 28px 15px;
+                width: 95%;
+            }
+
+            .carousel-wrapper {
+                gap: 10px;
+            }
+
+            .carousel-scene {
+                width: 200px;
+                height: 260px;
+            }
+
+            .carousel-card {
+                width: 200px;
+                height: 260px;
+                padding: 20px 15px;
+            }
+
+            .carousel-img-wrapper {
+                width: 110px;
+                height: 110px;
+            }
+
+            .carousel-arrow {
+                width: 42px;
+                height: 42px;
+                font-size: 1.4rem;
+            }
         }
 
-        @media (max-width: 500px) {
-            header { padding: 8px 12px; }
-            .logo img { height: 40px; }
-            .nav-btn { padding: 5px 10px; font-size: 10px; gap: 4px; }
-            .user-name { font-size: 11px; }
-            .user-avatar { width: 28px; height: 28px; }
-            .touch-btn { width: 50px; height: 50px; font-size: 22px; }
-            .game-fullscreen { top: 100px; }
-            .game-info span { font-size: 10px; padding: 3px 8px; }
+        /* Adicione este CSS dentro da tag <style> */
+        /* MODAL DE NOME */
+        .name-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
         }
 
-        @media (orientation: landscape) and (max-height: 500px) {
-            .game-fullscreen { top: 70px; }
-            .game-wrapper { padding: 5px; }
-            canvas { max-height: calc(100% - 60px); }
-            .touch-btn { width: 45px; height: 45px; font-size: 20px; }
-            .game-controls { margin-top: 5px; gap: 10px; }
-            .help-emoji { width: 45px; height: 45px; font-size: 1.5rem; bottom: 10px; right: 10px; }
-            .assistant-wrapper { bottom: 60px; right: 10px; }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .name-modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .name-modal-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .name-modal-header i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .name-modal-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 3px solid #fff;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            font-family: 'Baloo 2', cursive;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .keyboard-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .keyboard-key {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            border: none;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: monospace;
+            text-transform: uppercase;
+            box-shadow: 0 3px 0 #999;
+        }
+
+        .keyboard-key:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #999;
+        }
+
+        .keyboard-key.special {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            width: 80px;
+        }
+
+        .keyboard-key.space {
+            width: 200px;
+        }
+
+        .confirm-name-btn {
+            background: linear-gradient(135deg, #2EC4B6 0%, #018B8B 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-name-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
         }
     </style>
 </head>
 
 <body>
-
+    <!-- TELA DE START -->
+    <div id="startScreen" class="start-screen">
+        <div class="start-container">
+            <div class="start-logo">
+                🎮
+            </div>
+            <h1 class="start-title">PRESS START</h1>
+            <p class="start-subtitle">Escola Ideal - Sua Jornada de Autoconhecimento</p>
+            <button id="startButton" class="start-btn">
+                ▶ COMEÇAR
+            </button>
+            <p class="press-start-text">Pressione o botão para iniciar</p>
+        </div>
+    </div>
     <div class="parallax-container">
         <div class="cloud cloud-1"></div>
         <div class="cloud cloud-2"></div>
         <div class="cloud cloud-3"></div>
         <div class="cloud cloud-4"></div>
         <div class="cloud cloud-5"></div>
-        <div class="layer-ground-back" id="parallax-ground-back"></div>
-        <img src="../src/img/background/school.png" class="layer-school" id="parallax-school" alt="Escola">
-        <img src="../src/img/background/tree.png" class="layer-tree-1" id="parallax-tree1" alt="Árvore 1">
-        <img src="../src/img/background/tree.png" class="layer-tree-2" id="parallax-tree2" alt="Árvore 2">
-        <div class="layer-ground-mid" id="parallax-ground-mid"></div>
-        <div class="layer-ground-front" id="parallax-ground-front"></div>
+        <div class="layer-ground-back"></div>
+        <img src="../src/img/background/school.png" class="layer-school" alt="Escola">
+        <img src="../src/img/background/tree.png" class="layer-tree-1" alt="Árvore 1">
+        <img src="../src/img/background/tree.png" class="layer-tree-2" alt="Árvore 2">
+        <div class="layer-ground-mid"></div>
+        <div class="layer-ground-front"></div>
     </div>
 
     <header>
@@ -548,27 +1240,66 @@
             <a href="#" class="nav-btn bg-orange"><i class="fa-solid fa-gamepad"></i> Joguinho</a>
             <a href="#" class="nav-btn bg-yellow"><i class="fa-solid fa-book-open"></i> História</a>
             <a href="#" class="nav-btn bg-red"><i class="fa-solid fa-gear"></i> Configuração</a>
+            <!-- POR ESTE BLOCO -->
             <div class="user-badge">
                 <i class="fas fa-sun" id="themeToggle"></i>
-                <i class="fas fa-bell"></i>
-                <span class="user-name">Amiguinho</span>
-                <div class="user-avatar"><i class="fas fa-user"></i></div>
+                <div class="user-info">
+                    <span class="user-name" id="userNameDisplay">Visitante</span>
+                    <div class="user-avatar" id="userAvatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
 
+    <!-- CARROSSEL 3D DE SELEÇÃO -->
+    <div id="carouselScreen" class="carousel-screen">
+        <div class="carousel-container">
+            <div class="carousel-title">
+                <span>ESCOLHA SEU PERSONAGEM</span>
+            </div>
+
+            <div class="carousel-wrapper">
+                <button class="carousel-arrow" id="prevCharBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="carousel-scene">
+                    <div class="carousel-3d-container" id="carousel3d"></div>
+                </div>
+
+                <button class="carousel-arrow" id="nextCharBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="carousel-indicators" id="indicators"></div>
+
+            <div>
+                <button id="startGameFinalBtn" class="start-game-btn">
+                    <i class="fas fa-play"></i>
+                    COMEÇAR JORNADA
+                </button>
+                <br>
+                <button id="resetSelectionBtn" class="reset-selection">
+                    <i class="fas fa-sync-alt"></i>
+                    Resetar personagem
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JOGO EM TELA CHEIA -->
-    <div class="game-fullscreen">
+    <div class="game-fullscreen" id="gameScreen" style="display: none;">
         <div class="game-wrapper">
             <canvas id="gameCanvas" width="800" height="600"></canvas>
-            
             <div class="game-controls">
                 <div class="touch-btn" data-direction="left">⬅️</div>
                 <div class="touch-btn" data-direction="up">⬆️</div>
                 <div class="touch-btn" data-direction="down">⬇️</div>
                 <div class="touch-btn" data-direction="right">➡️</div>
             </div>
-            
             <div class="game-info">
                 <span>🎮 Toque nos botões ou no chão</span>
                 <span id="posDisplay">📍 400, 300</span>
@@ -576,30 +1307,188 @@
         </div>
     </div>
 
-    <!-- ASSISTENTE -->
-    <div class="help-emoji" id="helpEmojiBtn">
-        <i class="fas fa-robot"></i>
-    </div>
-
-    <div id="magicToast" class="magic-toast">
-        <i class="fas fa-magic"></i>
-        <span id="toastMessage">✨ Mensagem mágica!</span>
-    </div>
-
+    <div class="help-emoji" id="helpEmojiBtn"><i class="fas fa-robot"></i></div>
+    <div id="magicToast" class="magic-toast"><i class="fas fa-magic"></i><span id="toastMessage">✨ Mensagem</span></div>
     <div class="assistant-wrapper" id="assistantContainer">
-        <div class="speech-bubble" id="bubbleText">
-            🎮 Olá! Use os botões ou toque no chão para mover o personagem!
-        </div>
-        <img src="src/img/Assistente00.png" alt="Assistente" class="assistant-char-img" id="assistantImage"
-            onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%23FFD700\'/%3E%3Ccircle cx=\'35\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Ccircle cx=\'65\' cy=\'40\' r=\'5\' fill=\'black\'/%3E%3Cpath d=\'M30 65 Q50 80,70 65\' stroke=\'black\' stroke-width=\'5\' fill=\'none\'/%3E%3C/svg%3E'">
+        <div class="speech-bubble" id="bubbleText">🎮 Olá! Use os botões ou toque no chão!</div>
+        <img src="../src/img/Assistente00.png" alt="Assistente" class="assistant-char-img" id="assistantImage">
     </div>
 
+    <div id="nameModal" class="name-modal" style="display: none;">
+        <div class="name-modal-content">
+            <div class="name-modal-header">
+                <i class="fas fa-pen"></i>
+                <h3>Qual é o seu nome?</h3>
+            </div>
+            <div class="name-modal-body">
+                <input type="text" id="playerNameInput" class="name-input" maxlength="15" placeholder="Digite seu nome">
+                <div class="keyboard-container" id="keyboardContainer">
+                    <!-- Teclado virtual será gerado aqui -->
+                </div>
+            </div>
+            <div class="name-modal-footer">
+                <button id="confirmNameBtn" class="confirm-name-btn">
+                    <i class="fas fa-check"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
     <script>
-        // ==================== JOGO ====================
+        // ============================================================
+        // LISTA DE PERSONAGENS (mesma do jogo original)
+        // ============================================================
+        const characterFolders = ["boy00", "boy01", "boy03", "boy04", "boy05", "girl00", "girl01", "girl02", "girl03"];
+
+        const personagens = characterFolders.map(folder => {
+            let nomeAmigavel = folder.replace('boy', '👦 ').replace('girl', '👧 ');
+            return { id: folder, nome: nomeAmigavel, folder: folder, emoji: nomeAmigavel.charAt(0) };
+        });
+
+        let currentIndex = 0;
+        let selectedCharacterId = null;
+
+        // Carregar do localStorage
+        const savedChar = localStorage.getItem('selectedCharacter');
+        if (savedChar && personagens.some(c => c.id === savedChar)) {
+            selectedCharacterId = savedChar;
+            currentIndex = personagens.findIndex(c => c.id === savedChar);
+        } else {
+            selectedCharacterId = personagens[0].id;
+            currentIndex = 0;
+        }
+
+        // Configurações Matemáticas do 3D
+        const theta = 360 / personagens.length;
+        const raio = Math.round(125 / Math.tan(Math.PI / personagens.length)) + 40;
+        let rotacaoAtual = -currentIndex * theta;
+
+        // Elementos
+        const carouselScreen = document.getElementById('carouselScreen');
+        const gameScreenDiv = document.getElementById('gameScreen');
+        const carousel3d = document.getElementById('carousel3d');
+        const prevBtn = document.getElementById('prevCharBtn');
+        const nextBtn = document.getElementById('nextCharBtn');
+        const startGameBtn = document.getElementById('startGameFinalBtn');
+        const resetSelBtn = document.getElementById('resetSelectionBtn');
+        const indicatorsContainer = document.getElementById('indicators');
+
+        // Construir cards 3D
+        function construirCards3D() {
+            carousel3d.innerHTML = '';
+            personagens.forEach((personagem, i) => {
+                const card = document.createElement('div');
+                card.className = 'carousel-card';
+                card.style.transform = `rotateY(${i * theta}deg) translateZ(${raio}px)`;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'carousel-img-wrapper';
+
+                const img = document.createElement('img');
+                img.className = 'carousel-character-img';
+                img.alt = personagem.nome;
+                const imgPath = `./src/img/${personagem.folder}/static.png`;
+                const tempImg = new Image();
+                tempImg.onload = () => { img.src = imgPath; };
+                tempImg.onerror = () => {
+                    img.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='30' fill='%232EC4B6'/%3E%3Ctext x='50' y='67' font-size='48' text-anchor='middle' fill='white' font-weight='bold' dy='.3em'%3E${personagem.emoji}%3C/text%3E%3C/svg%3E`;
+                };
+                img.src = imgPath;
+
+                const nome = document.createElement('div');
+                nome.className = 'carousel-name';
+                nome.textContent = personagem.nome;
+
+                wrapper.appendChild(img);
+                card.appendChild(wrapper);
+                card.appendChild(nome);
+                carousel3d.appendChild(card);
+            });
+        }
+
+        function atualizarCarrossel() {
+            carousel3d.style.transform = `translateZ(${-raio}px) rotateY(${rotacaoAtual}deg)`;
+            selectedCharacterId = personagens[currentIndex].id;
+            atualizarIndicadores();
+        }
+
+        function criarIndicadores() {
+            indicatorsContainer.innerHTML = '';
+            personagens.forEach((_, index) => {
+                const indicador = document.createElement('div');
+                indicador.classList.add('indicator');
+                if (index === currentIndex) indicador.classList.add('active');
+                indicador.addEventListener('click', () => irPara(index));
+                indicatorsContainer.appendChild(indicador);
+            });
+        }
+
+        function atualizarIndicadores() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) indicator.classList.add('active');
+                else indicator.classList.remove('active');
+            });
+        }
+
+        function irPara(index) {
+            if (index === currentIndex) return;
+            let diff = index - currentIndex;
+            if (Math.abs(diff) > personagens.length / 2) {
+                if (diff > 0) diff -= personagens.length;
+                else diff += personagens.length;
+            }
+            rotacaoAtual -= diff * theta;
+            currentIndex = index;
+            atualizarCarrossel();
+            showToast(`✨ ${personagens[index].nome} selecionado! ✨`, 1200);
+            localStorage.setItem('selectedCharacter', selectedCharacterId);
+        }
+
+        function anterior() {
+            currentIndex = (currentIndex - 1 + personagens.length) % personagens.length;
+            rotacaoAtual += theta;
+            atualizarCarrossel();
+            showToast(`✨ ${personagens[currentIndex].nome} será seu companheiro! ✨`, 1200);
+            localStorage.setItem('selectedCharacter', selectedCharacterId);
+        }
+
+        function proximo() {
+            currentIndex = (currentIndex + 1) % personagens.length;
+            rotacaoAtual -= theta;
+            atualizarCarrossel();
+            showToast(`✨ ${personagens[currentIndex].nome} será seu companheiro! ✨`, 1200);
+            localStorage.setItem('selectedCharacter', selectedCharacterId);
+        }
+
+        prevBtn.addEventListener('click', anterior);
+        nextBtn.addEventListener('click', proximo);
+
+        resetSelBtn.addEventListener('click', () => {
+            localStorage.removeItem('selectedCharacter');
+            currentIndex = 0;
+            selectedCharacterId = personagens[0].id;
+            rotacaoAtual = -currentIndex * theta;
+            atualizarCarrossel();
+            showToast(`🔄 Personagem resetado para ${personagens[0].nome}! 🔄`, 1500);
+            localStorage.setItem('selectedCharacter', selectedCharacterId);
+        });
+
+        // Inicializa carrossel
+        construirCards3D();
+        criarIndicadores();
+        atualizarCarrossel();
+
+        // ============================================================
+        // JOGO COM SPRITES (mesmo código original)
+        // ============================================================
+        let gameInitialized = false;
+        let currentCharacterFolder = '';
+        let playerSprites = {};
+        let animFrameId = null;
+
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const posDisplay = document.getElementById('posDisplay');
-
         const SPEED = 4;
 
         const player = {
@@ -609,57 +1498,62 @@
             sprites: {}
         };
 
-        const spriteNames = ['static00', 'left00', 'left01', 'up00', 'up01', 'down00', 'down01'];
-        const placeholderColors = {
-            'static00': '#4CAF50', 'left00': '#FF9800', 'left01': '#FF9800',
-            'up00': '#2196F3', 'up01': '#2196F3', 'down00': '#9C27B0', 'down01': '#9C27B0'
-        };
+        const neededSprites = ['static', 'down00', 'down01', 'up00', 'up01', 'left00', 'left01'];
 
-        function createPlaceholderSprite(color) {
-            const c = document.createElement('canvas');
-            c.width = 64; c.height = 64;
-            const ct = c.getContext('2d');
-            ct.fillStyle = color;
-            ct.fillRect(0, 0, 64, 64);
-            ct.fillStyle = '#FFFFFF';
-            ct.font = 'bold 32px Arial';
-            ct.fillText('👤', 18, 48);
-            ct.strokeStyle = '#000';
-            ct.strokeRect(0, 0, 64, 64);
-            return c;
+        function loadSpritesForCharacter(folderPath) {
+            return new Promise((resolve) => {
+                let loaded = 0;
+                const total = neededSprites.length;
+                const spritesMap = {};
+                neededSprites.forEach(spriteKey => {
+                    let fileName = spriteKey === 'static' ? 'static.png' : `${spriteKey}.png`;
+                    const img = new Image();
+                    img.onload = () => {
+                        spritesMap[spriteKey] = img;
+                        loaded++;
+                        if (loaded === total) resolve(spritesMap);
+                    };
+                    img.onerror = () => {
+                        const fallbackCanvas = document.createElement('canvas');
+                        fallbackCanvas.width = 64;
+                        fallbackCanvas.height = 64;
+                        const fctx = fallbackCanvas.getContext('2d');
+                        fctx.fillStyle = '#c0a080';
+                        fctx.fillRect(0, 0, 64, 64);
+                        fctx.fillStyle = '#333';
+                        fctx.font = 'bold 30px sans-serif';
+                        fctx.fillText('?', 20, 48);
+                        spritesMap[spriteKey] = fallbackCanvas;
+                        loaded++;
+                        if (loaded === total) resolve(spritesMap);
+                    };
+                    img.src = `./src/img/${folderPath}/${fileName}`;
+                });
+            });
         }
 
-        let loadedImages = 0;
-        spriteNames.forEach(name => {
-            const img = new Image();
-            img.onload = () => { player.sprites[name] = img; loadedImages++; if(loadedImages === spriteNames.length) startGame(); };
-            img.onerror = () => { player.sprites[name] = createPlaceholderSprite(placeholderColors[name] || '#CCC'); loadedImages++; if(loadedImages === spriteNames.length) startGame(); };
-            img.src = `./src/img/boy/${name}.png`;
-        });
-
-        // Controles
         let touchDirections = { up: false, down: false, left: false, right: false };
         let keys = {};
 
-        window.addEventListener('keydown', e => {
-            keys[e.key] = true;
-            if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d'].includes(e.key)) e.preventDefault();
-        });
-        window.addEventListener('keyup', e => keys[e.key] = false);
+        function attachControls() {
+            window.addEventListener('keydown', e => {
+                keys[e.key] = true;
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'w', 'a', 's', 'd'].includes(e.key)) e.preventDefault();
+            });
+            window.addEventListener('keyup', e => keys[e.key] = false);
+            document.querySelectorAll('.touch-btn').forEach(btn => {
+                const dir = btn.getAttribute('data-direction');
+                const start = (e) => { e.preventDefault(); touchDirections[dir] = true; btn.style.transform = 'scale(0.95)'; };
+                const end = (e) => { e.preventDefault(); touchDirections[dir] = false; btn.style.transform = 'scale(1)'; };
+                btn.addEventListener('touchstart', start);
+                btn.addEventListener('touchend', end);
+                btn.addEventListener('touchcancel', end);
+                btn.addEventListener('mousedown', start);
+                btn.addEventListener('mouseup', end);
+                btn.addEventListener('mouseleave', end);
+            });
+        }
 
-        document.querySelectorAll('.touch-btn').forEach(btn => {
-            const dir = btn.getAttribute('data-direction');
-            const start = (e) => { e.preventDefault(); touchDirections[dir] = true; btn.style.transform = 'scale(0.95)'; };
-            const end = (e) => { e.preventDefault(); touchDirections[dir] = false; btn.style.transform = 'scale(1)'; };
-            btn.addEventListener('touchstart', start);
-            btn.addEventListener('touchend', end);
-            btn.addEventListener('touchcancel', end);
-            btn.addEventListener('mousedown', start);
-            btn.addEventListener('mouseup', end);
-            btn.addEventListener('mouseleave', end);
-        });
-
-        // Teleporte ao tocar no canvas
         function handleCanvasTap(e) {
             e.preventDefault();
             const rect = canvas.getBoundingClientRect();
@@ -668,13 +1562,10 @@
             let clientX, clientY;
             if (e.touches) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
             else { clientX = e.clientX; clientY = e.clientY; }
-            
-            let canvasX = (clientX - rect.left) * scaleX - player.width/2;
-            let canvasY = (clientY - rect.top) * scaleY - player.height/2;
+            let canvasX = (clientX - rect.left) * scaleX - player.width / 2;
+            let canvasY = (clientY - rect.top) * scaleY - player.height / 2;
             player.targetX = Math.max(0, Math.min(canvas.width - player.width, canvasX));
             player.targetY = Math.max(0, Math.min(canvas.height - player.height, canvasY));
-            
-            // Efeito visual
             const fx = document.createElement('div');
             fx.style.position = 'fixed';
             fx.style.left = `${clientX - 20}px`;
@@ -688,19 +1579,15 @@
             document.body.appendChild(fx);
             setTimeout(() => { fx.style.transform = 'scale(2)'; fx.style.opacity = '0'; setTimeout(() => fx.remove(), 200); }, 10);
         }
-        canvas.addEventListener('touchstart', handleCanvasTap);
-        canvas.addEventListener('mousedown', handleCanvasTap);
 
-        function moveToTarget() {
+        function updateMovement() {
+            let moving = false;
             if (player.targetX !== null && player.targetY !== null) {
                 const dx = player.targetX - player.x;
                 const dy = player.targetY - player.y;
                 const dist = Math.hypot(dx, dy);
                 if (dist < SPEED) {
-                    player.x = player.targetX;
-                    player.y = player.targetY;
-                    player.targetX = null;
-                    player.targetY = null;
+                    player.x = player.targetX; player.y = player.targetY; player.targetX = null; player.targetY = null;
                 } else {
                     const angle = Math.atan2(dy, dx);
                     player.x += Math.cos(angle) * SPEED;
@@ -708,86 +1595,84 @@
                     if (Math.abs(dx) > Math.abs(dy)) player.direction = dx > 0 ? 'right' : 'left';
                     else player.direction = dy > 0 ? 'down' : 'up';
                 }
-                return true;
-            }
-            return false;
-        }
-
-        function update() {
-            let moving = false;
-            if (!moveToTarget()) {
+                moving = true;
+            } else {
                 let moveX = 0, moveY = 0;
                 if (keys['ArrowLeft'] || keys['a'] || touchDirections.left) moveX = -SPEED;
                 if (keys['ArrowRight'] || keys['d'] || touchDirections.right) moveX = SPEED;
                 if (keys['ArrowUp'] || keys['w'] || touchDirections.up) moveY = -SPEED;
                 if (keys['ArrowDown'] || keys['s'] || touchDirections.down) moveY = SPEED;
-                
                 if (moveX !== 0 || moveY !== 0) {
-                    player.x += moveX;
-                    player.y += moveY;
-                    moving = true;
+                    player.x += moveX; player.y += moveY; moving = true;
                     if (moveX !== 0) player.direction = moveX > 0 ? 'right' : 'left';
                     else if (moveY !== 0) player.direction = moveY > 0 ? 'down' : 'up';
                 } else player.direction = 'static';
-            } else moving = true;
-            
+            }
             player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
             player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
-            
             const now = Date.now();
-            if (now - player.lastFrameUpdate > 1000/6) {
+            if (now - player.lastFrameUpdate > 1000 / 6) {
                 if (moving) player.frame = player.frame === 0 ? 1 : 0;
                 else player.frame = 0;
                 player.lastFrameUpdate = now;
             }
-            
             posDisplay.innerHTML = `📍 ${Math.floor(player.x)}, ${Math.floor(player.y)}`;
         }
 
-        function draw() {
+        function drawGame() {
             const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            grad.addColorStop(0, '#E0F2F1');
-            grad.addColorStop(1, '#B2DFDB');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.strokeStyle = '#80CBC4';
-            ctx.lineWidth = 0.5;
-            for (let i = 0; i < canvas.width; i += 40) {
-                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
-            }
-            
-            let currentSprite;
-            let flip = false;
-            switch(player.direction) {
-                case 'left': currentSprite = player.sprites[`left0${player.frame}`]; break;
-                case 'right': currentSprite = player.sprites[`left0${player.frame}`]; flip = true; break;
-                case 'up': currentSprite = player.sprites[`up0${player.frame}`]; break;
-                case 'down': currentSprite = player.sprites[`down0${player.frame}`]; break;
-                default: currentSprite = player.sprites['static00'];
-            }
-            
-            if (currentSprite) {
+            grad.addColorStop(0, '#E0F2F1'); grad.addColorStop(1, '#B2DFDB');
+            ctx.fillStyle = grad; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#80CBC4'; ctx.lineWidth = 0.5;
+            for (let i = 0; i < canvas.width; i += 40) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke(); }
+            let currentImg, flip = false;
+            const dir = player.direction;
+            if (dir === 'left') currentImg = player.sprites[`left0${player.frame}`];
+            else if (dir === 'right') { currentImg = player.sprites[`left0${player.frame}`]; flip = true; }
+            else if (dir === 'up') currentImg = player.sprites[`up0${player.frame}`];
+            else if (dir === 'down') currentImg = player.sprites[`down0${player.frame}`];
+            else currentImg = player.sprites['static'];
+            if (currentImg) {
                 ctx.save();
-                if (flip) { ctx.translate(player.x + player.width, player.y); ctx.scale(-1, 1); ctx.drawImage(currentSprite, 0, 0, player.width, player.height); }
-                else { ctx.drawImage(currentSprite, player.x, player.y, player.width, player.height); }
+                if (flip) { ctx.translate(player.x + player.width, player.y); ctx.scale(-1, 1); ctx.drawImage(currentImg, 0, 0, player.width, player.height); }
+                else { ctx.drawImage(currentImg, player.x, player.y, player.width, player.height); }
                 ctx.restore();
             }
-            
-            ctx.fillStyle = '#2C3E50';
-            ctx.font = 'bold 16px "Comic Sans MS", cursive';
-            ctx.fillText("🎮 Explore a Escola Ideal", 15, 30);
-            ctx.font = '12px Arial';
-            ctx.fillStyle = '#78909C';
-            ctx.fillText("✨ Toque no chão para teleportar!", canvas.width - 170, canvas.height - 15);
+            ctx.fillStyle = '#2C3E50'; ctx.font = 'bold 16px "Comic Sans MS", cursive'; ctx.fillText("🎮 Explore a Escola Ideal", 15, 30);
         }
 
-        let animId = null;
-        function gameLoop() { update(); draw(); animId = requestAnimationFrame(gameLoop); }
-        function startGame() { if(animId) cancelAnimationFrame(animId); gameLoop(); }
+        function gameLoop() {
+            updateMovement();
+            drawGame();
+            animFrameId = requestAnimationFrame(gameLoop);
+        }
 
-        // ==================== ASSISTENTE ====================
+        async function initGameWithCharacter(charId) {
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            currentCharacterFolder = charId;
+            const loadedSprites = await loadSpritesForCharacter(currentCharacterFolder);
+            player.sprites = loadedSprites;
+            player.x = 400; player.y = 300; player.targetX = null; player.targetY = null; player.frame = 0; player.direction = 'static';
+            if (!gameInitialized) {
+                attachControls();
+                canvas.addEventListener('touchstart', handleCanvasTap);
+                canvas.addEventListener('mousedown', handleCanvasTap);
+                gameInitialized = true;
+            }
+            gameLoop();
+        }
+
+        startGameBtn.addEventListener('click', () => {
+            carouselScreen.classList.add('hide');
+            setTimeout(() => {
+                carouselScreen.style.display = 'none';
+                gameScreenDiv.style.display = 'flex';
+                initGameWithCharacter(selectedCharacterId);
+                showToast(`🎉 Bem-vindo(a) ${personagens.find(c => c.id === selectedCharacterId).nome}! Divirta-se! 🎉`, 3000);
+            }, 400);
+        });
+
+        // Assistente + Tema + Folhas
         let isAssistantVisible = false;
         const assistantContainer = document.getElementById('assistantContainer');
         const helpBtn = document.getElementById('helpEmojiBtn');
@@ -805,104 +1690,282 @@
             isAssistantVisible = !isAssistantVisible;
             if (isAssistantVisible) {
                 assistantContainer.classList.add('is-visible');
-                helpBtn.style.opacity = '0';
-                helpBtn.style.visibility = 'hidden';
-                const messages = [
-                    "🎮 Use os botões ou toque no chão para se teleportar!",
-                    "📚 Explore a Escola Ideal, cada canto tem uma surpresa!",
-                    "⭐ Quanto mais você explorar, mais prêmios vai ganhar!",
-                    "🏆 Complete missões especiais desbloqueando conquistas!",
-                    "💡 Dica: Toque duas vezes rápido para uma surpresa!"
-                ];
-                bubbleText.innerText = messages[Math.floor(Math.random() * messages.length)];
-                showToast("✨ Assistente ativado! ✨", 2000);
+                helpBtn.style.opacity = '0'; helpBtn.style.visibility = 'hidden';
+                bubbleText.innerText = "✨ Escolha seu personagem e clique em START! ✨";
             } else {
                 assistantContainer.classList.remove('is-visible');
-                helpBtn.style.opacity = '1';
-                helpBtn.style.visibility = 'visible';
-                showToast("👋 Até logo! Clique no robô para me chamar", 2000);
+                helpBtn.style.opacity = '1'; helpBtn.style.visibility = 'visible';
+                showToast("👋 Até logo!", 1500);
             }
         }
 
         helpBtn.addEventListener('click', toggleAssistant);
         document.getElementById('assistantImage').addEventListener('click', () => {
-            const messages = [
-                "🎮 Continue explorando!",
-                "📖 Você está indo muito bem!",
-                "🏆 Já visitou todos os cantos?",
-                "✨ Parabéns, continue assim!",
-                "🎯 Missão: Explorar a Escola Ideal!"
-            ];
-            bubbleText.innerText = messages[Math.floor(Math.random() * messages.length)];
-            showToast("💬 " + bubbleText.innerText, 2500);
+            bubbleText.innerText = "🎮 Divirta-se explorando a Escola Ideal!";
+            showToast("💬 " + bubbleText.innerText, 2000);
         });
 
-        // ==================== TEMA E PARALLAX ====================
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             themeToggle.classList.toggle('fa-sun');
             themeToggle.classList.toggle('fa-moon');
-            showToast(body.classList.contains('dark-mode') ? "🌙 Modo Noturno ativado!" : "☀️ Modo Diurno ativado!");
+            showToast(body.classList.contains('dark-mode') ? "🌙 Modo Noturno" : "☀️ Modo Diurno");
         });
 
-        // Scroll parallax (só para desktop, em mobile não tem scroll)
-        const school = document.getElementById('parallax-school');
-        const tree1 = document.getElementById('parallax-tree1');
-        const tree2 = document.getElementById('parallax-tree2');
-        const groundBack = document.getElementById('parallax-ground-back');
-        const groundMid = document.getElementById('parallax-ground-mid');
-        const groundFront = document.getElementById('parallax-ground-front');
-        
-        window.addEventListener('scroll', () => {
-            let scrollY = window.scrollY;
-            if (school) school.style.transform = `translateY(${scrollY * -0.05}px)`;
-            if (tree1) tree1.style.transform = `translateY(${scrollY * -0.1}px)`;
-            if (tree2) tree2.style.transform = `translateY(${scrollY * -0.08}px)`;
-            if (groundBack) groundBack.style.transform = `translateY(${scrollY * -0.03}px)`;
-            if (groundMid) groundMid.style.transform = `translateY(${scrollY * -0.06}px)`;
-            if (groundFront) groundFront.style.transform = `translateY(${scrollY * -0.12}px)`;
-        });
-
-        function createLeaf() {
+        for (let i = 0; i < 20; i++) {
             const leaf = document.createElement('div');
             leaf.classList.add('leaf');
-            const size = Math.random() * 20 + 15;
-            leaf.style.width = `${size}px`;
-            leaf.style.height = `${size}px`;
-            leaf.style.left = `${Math.random() * 100}%`;
-            const duration = Math.random() * 12 + 8;
-            const type = Math.floor(Math.random() * 3) + 1;
-            leaf.style.animation = `fallLeaf${type} ${duration}s linear infinite`;
-            leaf.style.animationDelay = `${Math.random() * -20}s`;
-            leaf.style.opacity = Math.random() * 0.5 + 0.3;
-            return leaf;
+            leaf.style.width = Math.random() * 20 + 15 + 'px';
+            leaf.style.height = leaf.style.width;
+            leaf.style.left = Math.random() * 100 + '%';
+            leaf.style.animation = `fallLeaf${Math.floor(Math.random() * 3) + 1} ${Math.random() * 12 + 8}s linear infinite`;
+            document.querySelector('.parallax-container').appendChild(leaf);
         }
 
-        const parallaxContainer = document.querySelector('.parallax-container');
-        for (let i = 0; i < 25; i++) parallaxContainer.appendChild(createLeaf());
-        
-        setInterval(() => {
-            if (document.querySelectorAll('.leaf').length < 20) parallaxContainer.appendChild(createLeaf());
-        }, 6000);
+        // ============================================================
+        // CONTROLE DA TELA DE START
+        // ============================================================
+        const startScreen = document.getElementById('startScreen');
+        const startButton = document.getElementById('startButton');
 
-        // Logo responsivo
-        const logoImg = document.getElementById('logo-img');
-        function updateLogo() {
-            if (window.innerWidth <= 500) logoImg.src = 'src/img/logo02.png';
-            else logoImg.src = '../src/img/logo.png';
+        // Inicialmente, garantir que o carrossel está escondido
+        carouselScreen.style.display = 'flex';
+        carouselScreen.classList.add('hide');
+        carouselScreen.style.opacity = '0';
+        carouselScreen.style.visibility = 'hidden';
+        carouselScreen.style.pointerEvents = 'none';
+
+        // Evento do botão START
+        startButton.addEventListener('click', () => {
+            // Esconde a tela de start com animação
+            startScreen.classList.add('hide');
+
+            // Mostra o carrossel após 100ms
+            setTimeout(() => {
+                carouselScreen.style.display = 'flex';
+                carouselScreen.classList.remove('hide');
+                carouselScreen.style.opacity = '1';
+                carouselScreen.style.visibility = 'visible';
+                carouselScreen.style.pointerEvents = 'auto';
+
+                showToast("✨ Escolha seu companheiro de jornada! ✨", 3000);
+
+                // Pequena animação extra no carrossel ao abrir
+                const carouselContainer = document.querySelector('.carousel-container');
+                carouselContainer.style.animation = 'none';
+                setTimeout(() => {
+                    carouselContainer.style.animation = 'slideInUp 0.6s cubic-bezier(0.34, 1.2, 0.64, 1)';
+                }, 10);
+            }, 800);
+        });
+
+        // ============================================================
+        // GERENCIADOR DE NOME E TECLADO
+        // ============================================================
+        let playerName = localStorage.getItem('playerName') || '';
+
+        // Função para criar teclado virtual (maiúsculo)
+        function createVirtualKeyboard() {
+            const keyboardContainer = document.getElementById('keyboardContainer');
+            if (!keyboardContainer) return;
+
+            const keyboardLayout = [
+                ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ç'],
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
+                ['BACK', 'CLEAR', 'SPACE']
+            ];
+
+            keyboardContainer.innerHTML = '';
+
+            keyboardLayout.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'keyboard-row';
+
+                row.forEach(key => {
+                    const button = document.createElement('button');
+                    button.className = 'keyboard-key';
+
+                    if (key === 'BACK') {
+                        button.innerHTML = '<i class="fas fa-backspace"></i>';
+                        button.classList.add('special');
+                        button.onclick = () => {
+                            const input = document.getElementById('playerNameInput');
+                            input.value = input.value.slice(0, -1);
+                        };
+                    }
+                    else if (key === 'CLEAR') {
+                        button.innerHTML = '<i class="fas fa-trash"></i>';
+                        button.classList.add('special');
+                        button.onclick = () => {
+                            document.getElementById('playerNameInput').value = '';
+                        };
+                    }
+                    else if (key === 'SPACE') {
+                        button.innerHTML = '␣';
+                        button.classList.add('special', 'space');
+                        button.onclick = () => {
+                            const input = document.getElementById('playerNameInput');
+                            input.value += ' ';
+                        };
+                    }
+                    else {
+                        button.textContent = key;
+                        button.onclick = () => {
+                            const input = document.getElementById('playerNameInput');
+                            input.value += key;
+                        };
+                    }
+
+                    rowDiv.appendChild(button);
+                });
+
+                keyboardContainer.appendChild(rowDiv);
+            });
         }
-        window.addEventListener('resize', updateLogo);
-        updateLogo();
 
-        // Início do jogo com delay para carregamento
-        if (loadedImages === spriteNames.length) startGame();
-        setTimeout(() => { if(!animId) startGame(); }, 2000);
-        
-        showToast("🎮 Bem-vindo ao Press Start! Toque no robô para ajuda", 4000);
-        
-        console.log('%c🎮 Press Start - Escola Ideal | Modo Fullscreen + Assistente 🎮', 'color: #FF69B4; font-size: 16px; font-weight: bold;');
+        // Função para mostrar o modal de nome
+        function showNameModal() {
+            const modal = document.getElementById('nameModal');
+            const input = document.getElementById('playerNameInput');
+
+            if (!modal) return;
+
+            input.value = playerName || '';
+            modal.style.display = 'flex';
+            input.focus();
+        }
+
+        // Função para esconder o modal de nome
+        function hideNameModal() {
+            const modal = document.getElementById('nameModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Função para atualizar o nome na interface
+        function updateUserNameDisplay() {
+            const nameDisplay = document.getElementById('userNameDisplay');
+            if (nameDisplay) {
+                const displayName = playerName ? playerName.toUpperCase() : 'VISITANTE';
+                nameDisplay.textContent = displayName;
+            }
+        }
+
+        // Função para atualizar a imagem do avatar
+        function updateUserAvatar(characterId) {
+            const avatarContainer = document.getElementById('userAvatar');
+            if (!avatarContainer) return;
+
+            const character = personagens.find(c => c.id === characterId);
+            const avatarImg = avatarContainer.querySelector('img');
+
+            if (character) {
+                const imgPath = `./src/img/${character.folder}/static.png`;
+                const img = new Image();
+                img.onload = () => {
+                    if (avatarImg) {
+                        avatarImg.src = imgPath;
+                    } else {
+                        avatarContainer.innerHTML = `<img src="${imgPath}" alt="Avatar" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">`;
+                    }
+                };
+                img.onerror = () => {
+                    avatarContainer.innerHTML = `<i class="fas fa-user"></i>`;
+                };
+                img.src = imgPath;
+            }
+        }
+
+        // Evento de confirmar nome
+        function setupNameModalEvents() {
+            const confirmBtn = document.getElementById('confirmNameBtn');
+            const input = document.getElementById('playerNameInput');
+
+            if (confirmBtn) {
+                confirmBtn.onclick = () => {
+                    const newName = input.value.trim();
+                    if (newName) {
+                        playerName = newName.toUpperCase();
+                        localStorage.setItem('playerName', playerName);
+                        updateUserNameDisplay();
+                        hideNameModal();
+                        showToast(`✨ Olá, ${playerName}! Bem-vindo(a) à jornada! ✨`, 2000);
+                    } else {
+                        showToast('⚠️ Por favor, digite seu nome! ⚠️', 1500);
+                    }
+                };
+            }
+
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        confirmBtn.click();
+                    }
+                });
+            }
+        }
+
+        // Modificar a função de seleção de personagem para atualizar o avatar
+        const originalIrPara = irPara;
+        window.irPara = function (index) {
+            originalIrPara(index);
+            if (selectedCharacterId) {
+                updateUserAvatar(selectedCharacterId);
+            }
+        };
+
+        // Modificar o evento de início do jogo
+        const originalStartGame = startGameBtn.onclick;
+        startGameBtn.onclick = () => {
+            if (!playerName) {
+                showNameModal();
+                return;
+            }
+            if (originalStartGame) originalStartGame();
+        };
+
+        // Inicializar nome e avatar quando o personagem for selecionado
+        function initializeUserData() {
+            if (playerName) {
+                updateUserNameDisplay();
+            }
+            if (selectedCharacterId) {
+                updateUserAvatar(selectedCharacterId);
+            }
+        }
+
+        // Adicionar evento ao botão de perfil para editar nome
+        document.addEventListener('DOMContentLoaded', () => {
+            const avatar = document.getElementById('userAvatar');
+            if (avatar) {
+                avatar.style.cursor = 'pointer';
+                avatar.onclick = () => {
+                    showNameModal();
+                };
+            }
+        });
+
+        // Inicializar tudo
+        createVirtualKeyboard();
+        setupNameModalEvents();
+        initializeUserData();
+
+        // Mostrar modal se não tiver nome ao abrir o carrossel
+        const originalCarrosselShow = startButton.onclick;
+        startButton.onclick = () => {
+            if (originalCarrosselShow) originalCarrosselShow();
+            setTimeout(() => {
+                if (!playerName) {
+                    setTimeout(() => {
+                        showNameModal();
+                    }, 1000);
+                }
+            }, 500);
+        };
     </script>
 
 </body>
